@@ -4,3 +4,6 @@
 [submodule "extern/box2d"]
 	path = extern/box2d
 	url = https://github.com/erincatto/box2d.git
+[submodule "extern/graphics"]
+	path = extern/graphics
+	url = https://github.com/fpuma/graphics2dmodule.git
