@@ -14,7 +14,7 @@ namespace Puma
             base.ConfigureAll(conf, target);
 
             conf.AddProject<Puma.Physics>( target );
-            //conf.AddProject<Puma.PhysicsTests>( target );
+            conf.AddProject<Puma.PhysicsTests>( target );
         }
     }
 

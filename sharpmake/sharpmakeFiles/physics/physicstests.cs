@@ -12,6 +12,7 @@ namespace Puma
             base.ConfigureAll(conf, target);
 
             conf.AddPublicDependency<Puma.Physics>(target);
+            conf.AddPublicDependency<Puma.Graphics>(target);
 
             conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);
 
