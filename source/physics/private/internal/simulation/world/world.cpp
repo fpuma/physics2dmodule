@@ -103,7 +103,7 @@ namespace puma::physics
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
         m_dynamicFrames.emplace_back( body, this, id );
-        body->SetUserData( nullptr );
+        body->GetUserData().pointer = 0;
 
         return id;
     }
@@ -117,7 +117,7 @@ namespace puma::physics
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
         m_staticFrames.emplace_back( body, this, id );
-        body->SetUserData( nullptr );
+        body->GetUserData().pointer = 0;
 
         return id;
     }
@@ -131,7 +131,7 @@ namespace puma::physics
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
         m_kinematicFrames.emplace_back( body, this, id );
-        body->SetUserData( nullptr );
+        body->GetUserData().pointer = 0;
 
         return id;
     }
