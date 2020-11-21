@@ -1,5 +1,5 @@
 #pragma once
-
+#include <precompiledphysics.h>
 #include <graphics/igraphics.h>
 #include <graphics/graphicdefinitions.h>
 
@@ -15,6 +15,7 @@
 #include <physics/simulation/frames/frameinfo.h>
 
 #include <bitset>
+#include <iostream>
 
 using namespace puma::physics;
 
