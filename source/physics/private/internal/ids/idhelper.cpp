@@ -41,7 +41,7 @@ namespace puma::physics
     {
         PhysicsID id = 0;
         PhysicsID worldIndex = 0;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = 0;
         serializeFrameID( _frameId, worldIndex, frameType, frameIndex, SerializeMode::ReadID );
         FramePartType framePartType = FramePartType::Body;
@@ -54,7 +54,7 @@ namespace puma::physics
     {
         PhysicsID id = 0;
         PhysicsID worldIndex = 0;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = 0;
         serializeFrameID( _frameId, worldIndex, frameType, frameIndex, SerializeMode::ReadID );
         FramePartType framePartType = FramePartType::Trigger;

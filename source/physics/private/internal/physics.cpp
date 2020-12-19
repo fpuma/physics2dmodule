@@ -46,7 +46,7 @@ namespace puma::physics
     IFrame* Physics::getFrame( FrameID _frameId )
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -67,7 +67,7 @@ namespace puma::physics
     const IFrame* Physics::getFrame( FrameID _frameId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -90,7 +90,7 @@ namespace puma::physics
     DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -103,7 +103,7 @@ namespace puma::physics
     const DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -116,7 +116,7 @@ namespace puma::physics
     StaticFrame* Physics::getStaticFrame( FrameID _frameId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -129,7 +129,7 @@ namespace puma::physics
     const StaticFrame* Physics::getStaticFrame( FrameID _frameId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -142,7 +142,7 @@ namespace puma::physics
     KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -155,7 +155,7 @@ namespace puma::physics
     const KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -169,7 +169,7 @@ namespace puma::physics
     IFramePart* Physics::getFramePart( FramePartID _framePartId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -209,7 +209,7 @@ namespace puma::physics
     const IFramePart* Physics::getFramePart( FramePartID _framePartId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -249,7 +249,7 @@ namespace puma::physics
     FrameBody* Physics::getFrameBody( FramePartID _framePartId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -274,7 +274,7 @@ namespace puma::physics
     const FrameBody* Physics::getFrameBody( FramePartID _framePartId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -299,7 +299,7 @@ namespace puma::physics
     FrameTrigger* Physics::getFrameTrigger( FramePartID _framePartId ) 
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -324,7 +324,7 @@ namespace puma::physics
     const FrameTrigger* Physics::getFrameTrigger( FramePartID _framePartId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -349,7 +349,7 @@ namespace puma::physics
     FrameType Physics::getFrameType( FrameID _frameId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
 
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
@@ -360,7 +360,7 @@ namespace puma::physics
     FrameType Physics::getFrameType( FramePartID  _framePartId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;
@@ -373,7 +373,7 @@ namespace puma::physics
     FramePartType Physics::getFramePartType( FramePartID _framePartId ) const
     {
         PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Count;
+        FrameType frameType = FrameType::Invalid;
         PhysicsID frameIndex = kMaxU32;
         FramePartType framePartType = FramePartType::Count;
         PhysicsID framePartIndex = kMaxU32;

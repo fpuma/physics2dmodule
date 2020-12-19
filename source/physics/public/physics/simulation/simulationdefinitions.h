@@ -20,6 +20,7 @@ namespace puma::physics
         Kinematic,
 
         Count,
+        Invalid,
     };
 
     enum class FramePartType

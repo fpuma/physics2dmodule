@@ -6,6 +6,7 @@ namespace puma::physics
 {
     struct FrameInfo
     {
+        FrameType frameType = FrameType::Invalid;
         Vec2 position;
         float angle = 0.0f;
         Vec2 linearVelocity;
