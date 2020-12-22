@@ -147,4 +147,19 @@ namespace puma::physics
     { 
         return (nullptr != m_b2Body) && (nullptr != m_b2Body->GetWorld()); 
     }
+
+    bool Frame::isEnabled() const
+    {
+        return m_b2Body->IsEnabled();
+    }
+
+    void Frame::enable()
+    {
+        m_b2Body->SetEnabled( true );
+    }
+
+    void Frame::disable()
+    {
+        m_b2Body->SetEnabled( false );
+    }
 }

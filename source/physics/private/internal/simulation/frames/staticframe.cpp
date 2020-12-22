@@ -50,4 +50,22 @@ namespace puma::physics
     {
         return m_frame.isValid();
     }
+
+    bool StaticFrame::isEnabled() const
+    {
+        assert( isValid() );
+        return m_frame.isEnabled();
+    }
+
+    void StaticFrame::enable()
+    {
+        assert( isValid() );
+        m_frame.enable();
+    }
+
+    void StaticFrame::disable()
+    {
+        assert( isValid() );
+        m_frame.disable();
+    }
 }

@@ -51,6 +51,24 @@ namespace puma::physics
         return m_frame.isValid();
     }
 
+    bool DynamicFrame::isEnabled() const
+    {
+        assert( isValid() );
+        return m_frame.isEnabled();
+    }
+
+    void DynamicFrame::enable()
+    {
+        assert( isValid() );
+        m_frame.enable();
+    }
+
+    void DynamicFrame::disable()
+    {
+        assert( isValid() );
+        m_frame.disable();
+    }
+
     Vec2 DynamicFrame::getLinearVelocity() const
     {
         return m_frame.getLinearVelocity();

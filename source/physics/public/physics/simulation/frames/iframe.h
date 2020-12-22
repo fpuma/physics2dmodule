@@ -26,5 +26,9 @@ namespace puma::physics
         virtual FramePartID addTrigger( const TriggerInfo& _triggerInfo ) = 0;
 
         virtual bool isValid() const = 0;
+        
+        virtual bool isEnabled() const = 0;
+        virtual void enable() = 0;
+        virtual void disable() = 0;
     };
 }

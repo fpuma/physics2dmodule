@@ -50,6 +50,10 @@ namespace puma::physics
 
         bool isValid() const;
 
+        bool isEnabled() const;
+        void enable();
+        void disable();
+
         FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
         FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
 

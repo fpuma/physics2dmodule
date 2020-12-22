@@ -30,6 +30,10 @@ namespace puma::physics
 
         bool isValid() const override;
 
+        bool isEnabled() const override;
+        void enable() override;
+        void disable() override;
+
         Vec2 getLinearVelocity() const override;
         void setLinearVelocity( const Vec2& _linearVelocity ) override;
 

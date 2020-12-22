@@ -51,6 +51,24 @@ namespace puma::physics
         return m_frame.isValid();
     }
 
+    bool KinematicFrame::isEnabled() const
+    {
+        assert( isValid() );
+        return m_frame.isEnabled();
+    }
+
+    void KinematicFrame::enable()
+    {
+        assert( isValid() );
+        m_frame.enable();
+    }
+
+    void KinematicFrame::disable()
+    {
+        assert( isValid() );
+        m_frame.disable();
+    }
+
     //KinematicFrame exclusive
     Vec2 KinematicFrame::getLinearVelocity() const
     {

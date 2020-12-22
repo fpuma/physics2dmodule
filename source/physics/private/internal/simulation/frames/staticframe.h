@@ -31,6 +31,10 @@ namespace puma::physics
 
         bool isValid() const override;
 
+        bool isEnabled() const override;
+        void enable() override;
+        void disable() override;
+
         //Internal
 
         FrameBody* getFrameBody( PhysicsID _index ) { return m_frame.getFrameBody( _index ); }
