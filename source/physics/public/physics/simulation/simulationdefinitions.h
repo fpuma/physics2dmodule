@@ -29,5 +29,6 @@ namespace puma::physics
         Trigger,
 
         Count,
+        Invalid,
     };
 }
