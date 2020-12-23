@@ -8,14 +8,14 @@ namespace puma::physics
 
     const WorldID IdHelper::buildWorldID( PhysicsID _worldIndex )
     {
-        PhysicsID id = kMaxU32;
+        PhysicsID id = 0;
         serializeWorldID( id, _worldIndex, SerializeMode::WriteID );
         return WorldID( id );
     }
 
     const FrameID IdHelper::buildDynamicFrameID( PhysicsID _worldIndex, PhysicsID _frameIndex )
     {
-        PhysicsID id = kMaxU32;
+        PhysicsID id = 0;
         FrameType frameType = FrameType::Dynamic;
         serializeFrameID( id, _worldIndex, frameType, _frameIndex, SerializeMode::WriteID );
         return FrameID( id );
@@ -23,7 +23,7 @@ namespace puma::physics
 
     const FrameID IdHelper::buildStaticFrameID( PhysicsID _worldIndex, PhysicsID _frameIndex )
     {
-        PhysicsID id = kMaxU32;
+        PhysicsID id = 0;
         FrameType frameType = FrameType::Static;
         serializeFrameID( id, _worldIndex, frameType, _frameIndex, SerializeMode::WriteID );
         return FrameID( id );
@@ -31,7 +31,7 @@ namespace puma::physics
 
     const FrameID IdHelper::buildKinematicFrameID( PhysicsID _worldIndex, PhysicsID _frameIndex )
     {
-        PhysicsID id = kMaxU32;
+        PhysicsID id = 0;
         FrameType frameType = FrameType::Kinematic;
         serializeFrameID( id, _worldIndex, frameType, _frameIndex, SerializeMode::WriteID );
         return FrameID( id );
@@ -39,10 +39,10 @@ namespace puma::physics
 
     const FramePartID IdHelper::buildFrameBodyID( PhysicsID _frameId, PhysicsID _framePartIndex )
     {
-        PhysicsID id = kMaxU32;
-        PhysicsID worldIndex = kMaxU32;
+        PhysicsID id = 0;
+        PhysicsID worldIndex = 0;
         FrameType frameType = FrameType::Invalid;
-        PhysicsID frameIndex = kMaxU32;
+        PhysicsID frameIndex = 0;
         serializeFrameID( _frameId, worldIndex, frameType, frameIndex, SerializeMode::ReadID );
         FramePartType framePartType = FramePartType::Body;
         serializeFramePartID( id, worldIndex, frameType, frameIndex, framePartType, _framePartIndex, SerializeMode::WriteID );
@@ -52,10 +52,10 @@ namespace puma::physics
 
     const FramePartID IdHelper::buildFrameTriggerID( PhysicsID _frameId, PhysicsID _framePartIndex )
     {
-        PhysicsID id = kMaxU32;
-        PhysicsID worldIndex = kMaxU32;
+        PhysicsID id = 0;
+        PhysicsID worldIndex = 0;
         FrameType frameType = FrameType::Invalid;
-        PhysicsID frameIndex = kMaxU32;
+        PhysicsID frameIndex = 0;
         serializeFrameID( _frameId, worldIndex, frameType, frameIndex, SerializeMode::ReadID );
         FramePartType framePartType = FramePartType::Trigger;
         serializeFramePartID( id, worldIndex, frameType, frameIndex, framePartType, _framePartIndex, SerializeMode::WriteID );
