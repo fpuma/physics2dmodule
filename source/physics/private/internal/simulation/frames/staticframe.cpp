@@ -76,6 +76,11 @@ namespace puma::physics
         return m_frame.getTrigger( _framePartId );
     }
 
+    void StaticFrame::removeFramePart( const FramePartID& _framePartId )
+    {
+        m_frame.removeFramePart( _framePartId );
+    }
+
     bool StaticFrame::isValid() const
     {
         return m_frame.isValid();

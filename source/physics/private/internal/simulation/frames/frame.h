@@ -56,6 +56,8 @@ namespace puma::physics
         const FrameBody* getBody( const FramePartID& _framePartId ) const;
         const FrameTrigger* getTrigger( const FramePartID& _framePartId ) const;
 
+        void removeFramePart( const FramePartID& _framePartId );
+
         bool isValid() const;
 
         bool isEnabled() const;

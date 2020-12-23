@@ -249,6 +249,21 @@ namespace puma::physics
         return getFrameTrigger( framePartIndex );
     }
 
+    void Frame::removeFramePart( const FramePartID& _framePartId )
+    {
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+        FramePartType framePartType = FramePartType::Invalid;
+        PhysicsID framePartIndex = kMaxU32;
+
+        IdHelper::readFramePartID( _framePartId, worldIndex, frameType, frameIndex, framePartType, framePartIndex );
+
+        FramePart* framePart = getInternalFramePart( framePartType, framePartIndex );
+
+        m_b2Body->DestroyFixture( framePart->getB2Fixture() );
+    }
+
     bool Frame::isValid() const 
     { 
         return (nullptr != m_b2Body) && (nullptr != m_b2Body->GetWorld()); 
