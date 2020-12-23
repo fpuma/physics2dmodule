@@ -30,6 +30,10 @@ namespace puma::physics
 
         bool isValid() const;
 
+        //Internal=============================================================================================
+        const b2Fixture* getB2Fixture() const { return m_b2Fixture; }
+        b2Fixture* getB2Fixture() { return m_b2Fixture; }
+
     private:
 
         b2Fixture* m_b2Fixture = nullptr;

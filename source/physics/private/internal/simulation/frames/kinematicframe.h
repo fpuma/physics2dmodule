@@ -28,6 +28,14 @@ namespace puma::physics
         FramePartID addBody( const BodyInfo& _bodyInfo ) override;
         FramePartID addTrigger( const TriggerInfo& _triggerInfo ) override;
 
+        IFramePart* getFramePart( const FramePartID& _framePartId ) override;
+        FrameBody* getBody( const FramePartID& _framePartId ) override;
+        FrameTrigger* getTrigger( const FramePartID& _framePartId ) override;
+
+        const IFramePart* getFramePart( const FramePartID& _framePartId ) const override;
+        const FrameBody* getBody( const FramePartID& _framePartId ) const override;
+        const FrameTrigger* getTrigger( const FramePartID& _framePartId ) const override;
+
         bool isValid() const override;
 
         bool isEnabled() const override;
@@ -40,13 +48,9 @@ namespace puma::physics
         float getAngularVelocity() const override;
         void setAngularVelocity( float _angularVelocity ) override;
 
-        //Internal
-
-        FrameBody* getFrameBody( PhysicsID _index ) { return m_frame.getFrameBody( _index ); }
-        FrameTrigger* getFrameTrigger( PhysicsID _index ) { return m_frame.getFrameTrigger( _index ); }
-
-        const FrameBody* getFrameBody( PhysicsID _index ) const { return m_frame.getFrameBody( _index ); }
-        const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { return m_frame.getFrameTrigger( _index ); }
+        //Internal=============================================================================================
+        Frame* getInternalFrame() { return &m_frame; }
+        const Frame* getInternalFrame() const { return &m_frame; }
 
     private:
 

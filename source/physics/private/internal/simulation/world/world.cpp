@@ -136,6 +136,145 @@ namespace puma::physics
         return id;
     }
 
+    namespace
+    {
+        u32 getVerifiedFrameIndex( const FrameID& _frameId, const WorldID& _worldId, FrameType& _outFrameType )
+        {
+            PhysicsID worldIndex = kMaxU32;
+            FrameType frameType = FrameType::Invalid;
+            PhysicsID frameIndex = kMaxU32;
+
+            IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+            PhysicsID currentWorldIndex = kMaxU32;
+            IdHelper::readWorldID( _worldId, currentWorldIndex );
+
+            if ( currentWorldIndex == worldIndex )
+            {
+                _outFrameType = frameType;
+            }
+            
+            return frameIndex;
+        }
+    }
+
+    IFrame* World::getFrame( const FrameID& _frameId )
+    {
+        FrameType frameType = FrameType::Invalid;
+        IFrame* framePtr = nullptr;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+
+        switch ( frameType )
+        {
+        case FrameType::Dynamic: 
+            framePtr = getDynamicFrame( frameIndex );
+            break;
+        case FrameType::Static: 
+            framePtr = getStaticFrame( frameIndex );
+            break;
+        case FrameType::Kinematic: 
+            framePtr = getKinematicFrame( frameIndex );
+            break;
+        default: 
+            assert( false );
+            break;
+        }
+
+        return framePtr;
+    }
+
+    const IFrame* World::getFrame( const FrameID& _frameId ) const
+    {
+        FrameType frameType = FrameType::Invalid;
+        const IFrame* framePtr = nullptr;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+
+        switch ( frameType )
+        {
+        case FrameType::Dynamic:
+            framePtr = getDynamicFrame( frameIndex );
+            break;
+        case FrameType::Static:
+            framePtr = getStaticFrame( frameIndex );
+            break;
+        case FrameType::Kinematic:
+            framePtr = getKinematicFrame( frameIndex );
+            break;
+        default:
+            assert( false );
+            break;
+        }
+
+        return framePtr;
+    }
+
+    DynamicFrame* World::getDynamicFrame( const FrameID& _frameId )
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Dynamic == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getDynamicFrame( frameIndex );
+    }
+
+    StaticFrame* World::getStaticFrame( const FrameID& _frameId )
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Static == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getStaticFrame( frameIndex );
+    }
+    
+    KinematicFrame* World::getKinematicFrame( const FrameID& _frameId )
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Kinematic == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getKinematicFrame( frameIndex );
+    }
+
+    const DynamicFrame* World::getDynamicFrame( const FrameID& _frameId ) const
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Dynamic == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getDynamicFrame( frameIndex );
+    }
+
+    const StaticFrame* World::getStaticFrame( const FrameID& _frameId ) const
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Static == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getStaticFrame( frameIndex );
+    }
+
+    const KinematicFrame* World::getKinematicFrame( const FrameID& _frameId ) const
+    {
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = getVerifiedFrameIndex( _frameId, m_worldId, frameType );
+        assert( FrameType::Kinematic == frameType );
+        assert( frameIndex != kMaxU32 );
+        return getKinematicFrame( frameIndex );
+    }
+
+    void World::removeFrame( const FrameID& _frameId )
+    {
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        Frame* framePtr = getInternalFrame( frameType, frameIndex );
+
+        m_b2World.DestroyBody( framePtr->getB2Body() );
+    }
+
     void World::setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility )
     {
         for ( const CollisionRelation& collisionRelation : _collisionCompatibility )
@@ -171,5 +310,65 @@ namespace puma::physics
         {
             m_b2World.DebugDraw();
         }
+    }
+
+    Frame* World::getInternalFrame( FrameType _frameType, u32 _frameIndex )
+    {
+        Frame* framePtr = nullptr;
+
+        switch ( _frameType )
+        {
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex )->getInternalFrame(); break;
+        default: assert( false ); break;
+        }
+
+        return framePtr;
+    }
+
+    const Frame* World::getInternalFrame( FrameType _frameType, u32 _frameIndex ) const
+    {
+        const Frame* framePtr = nullptr;
+
+        switch ( _frameType )
+        {
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex )->getInternalFrame(); break;
+        default: assert( false ); break;
+        }
+
+        return framePtr;
+    }
+
+    IFrame* World::getFrame( FrameType _frameType, u32 _frameIndex )
+    {
+        IFrame* framePtr = nullptr;
+
+        switch ( _frameType )
+        {
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex ); break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex ); break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex ); break;
+        default: assert( false ); break;
+        }
+
+        return framePtr;
+    }
+
+    const IFrame* World::getFrame( FrameType _frameType, u32 _frameIndex ) const
+    {
+        const IFrame* framePtr = nullptr;
+
+        switch ( _frameType )
+        {
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex ); break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex ); break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex ); break;
+        default: assert( false ); break;
+        }
+
+        return framePtr;
     }
 }

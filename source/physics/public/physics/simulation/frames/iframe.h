@@ -25,6 +25,14 @@ namespace puma::physics
         virtual FramePartID addBody( const BodyInfo& _bodyInfo ) = 0;
         virtual FramePartID addTrigger( const TriggerInfo& _triggerInfo ) = 0;
 
+        virtual IFramePart* getFramePart( const FramePartID& _framePartId ) = 0;
+        virtual IFrameBody* getBody( const FramePartID& _framePartId ) = 0;
+        virtual IFrameTrigger* getTrigger( const FramePartID& _framePartId ) = 0;
+
+        virtual const IFramePart* getFramePart( const FramePartID& _framePartId ) const = 0;
+        virtual const IFrameBody* getBody( const FramePartID& _framePartId ) const = 0;
+        virtual const IFrameTrigger* getTrigger( const FramePartID& _framePartId ) const = 0;
+
         virtual bool isValid() const = 0;
         
         virtual bool isEnabled() const = 0;

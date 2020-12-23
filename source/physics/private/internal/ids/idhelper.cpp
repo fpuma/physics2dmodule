@@ -63,6 +63,13 @@ namespace puma::physics
         return FramePartID( id );
     }
 
+    void IdHelper::readWorldID( WorldID _worldId, PhysicsID& _worldIndex )
+    {
+        PhysicsID id = _worldId.value();
+        serializeWorldID( id, _worldIndex, SerializeMode::ReadID );
+        assert( _worldIndex < kMaxWorldCount );
+    }
+
     void IdHelper::readFrameID( FrameID _id, PhysicsID& _worldIndex, FrameType& _frameType, PhysicsID& _frameIndex )
     {
         PhysicsID id = _id.value();

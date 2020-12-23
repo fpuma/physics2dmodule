@@ -20,6 +20,18 @@ namespace puma::physics
         virtual const FrameID addStaticFrame( const FrameInfo& _frameInfo ) = 0;
         virtual const FrameID addKinematicFrame( const FrameInfo& _frameInfo ) = 0;
 
+        virtual IFrame* getFrame( const FrameID& _frameId ) = 0;
+        virtual IDynamicFrame* getDynamicFrame( const FrameID& _frameId ) = 0;
+        virtual IStaticFrame* getStaticFrame( const FrameID& _frameId ) = 0;
+        virtual IKinematicFrame* getKinematicFrame( const FrameID& _frameId ) = 0;
+
+        virtual const IFrame* getFrame( const FrameID& _frameId ) const = 0;
+        virtual const IDynamicFrame* getDynamicFrame( const FrameID& _frameId ) const = 0;
+        virtual const IStaticFrame* getStaticFrame( const FrameID& _frameId ) const = 0;
+        virtual const IKinematicFrame* getKinematicFrame( const FrameID& _frameId ) const = 0;
+
+        virtual void removeFrame( const FrameID& _frameId ) = 0;
+
         virtual void update( float _deltaTime ) = 0;
 
         virtual void setSimulationTimeStep( float _simulationTimeStep ) = 0;
