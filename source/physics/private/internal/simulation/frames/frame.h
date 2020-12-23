@@ -48,17 +48,35 @@ namespace puma::physics
         FramePartID addBody( const BodyInfo& _bodyInfo );
         FramePartID addTrigger( const TriggerInfo& _triggerInfo );
 
+        IFramePart* getFramePart( const FramePartID& _framePartId );
+        FrameBody* getBody( const FramePartID& _framePartId );
+        FrameTrigger* getTrigger( const FramePartID& _framePartId );
+
+        const IFramePart* getFramePart( const FramePartID& _framePartId ) const;
+        const FrameBody* getBody( const FramePartID& _framePartId ) const;
+        const FrameTrigger* getTrigger( const FramePartID& _framePartId ) const;
+
         bool isValid() const;
 
         bool isEnabled() const;
         void enable();
         void disable();
 
-        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
-        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
+        //Internal=============================================================================================
+        FramePart* getInternalFramePart( FramePartType _framePartType, PhysicsID _framePartIndex );
+        const FramePart* getInternalFramePart( FramePartType _framePartType, PhysicsID _framePartIndex ) const;
+        
+        IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex );
+        const IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex ) const;
 
+        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
         const FrameBody* getFrameBody( PhysicsID _index ) const { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
+        
+        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
         const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
+
+        const b2Body* getB2Body() const { return m_b2Body; }
+        b2Body* getB2Body() { return m_b2Body; }
 
     private:
         b2Body* m_b2Body = nullptr;

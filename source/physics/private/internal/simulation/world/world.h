@@ -36,6 +36,18 @@ namespace puma::physics
         const FrameID addStaticFrame( const FrameInfo& _frameInfo ) override;
         const FrameID addKinematicFrame( const FrameInfo& _frameInfo ) override;
 
+        IFrame* getFrame( const FrameID& _frameId );
+        DynamicFrame* getDynamicFrame( const FrameID& _frameId );
+        StaticFrame* getStaticFrame( const FrameID& _frameId );
+        KinematicFrame* getKinematicFrame( const FrameID& _frameId );
+
+        const IFrame* getFrame( const FrameID& _frameId ) const;
+        const DynamicFrame* getDynamicFrame( const FrameID& _frameId ) const;
+        const StaticFrame* getStaticFrame( const FrameID& _frameId ) const;
+        const KinematicFrame* getKinematicFrame( const FrameID& _frameId ) const;
+
+        void removeFrame( const FrameID& _frameId ) override;
+
         void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) override;
         CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const override;
         void setCollisionListener( std::unique_ptr<ICollisionListener>&& _collisionListener ) override;
@@ -43,14 +55,21 @@ namespace puma::physics
         void setDebugDraw( std::unique_ptr<DebugDraw>&& _debugDraw ) override;
         void debugDraw() override;
 
-        //Internal
-        DynamicFrame*   getDynamicFrame( PhysicsID _index )     { assert( _index < m_dynamicFrames.size() ); return &m_dynamicFrames[_index]; }
-        StaticFrame*    getStaticFrame( PhysicsID _index )      { assert( _index < m_staticFrames.size() ); return &m_staticFrames[_index]; }
-        KinematicFrame* getKinematicFrame( PhysicsID _index )   { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
+        //Internal=============================================================================================
+        Frame* getInternalFrame( FrameType _frameType, u32 _frameIndex );
+        const Frame* getInternalFrame( FrameType _frameType, u32 _frameIndex ) const;
 
-        const DynamicFrame*     getDynamicFrame( PhysicsID _index )     const { assert( _index < m_dynamicFrames.size() ); return &m_dynamicFrames[_index]; }
-        const StaticFrame*      getStaticFrame( PhysicsID _index )      const { assert( _index < m_staticFrames.size() ); return &m_staticFrames[_index]; }
-        const KinematicFrame*   getKinematicFrame( PhysicsID _index )   const { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
+        IFrame* getFrame( FrameType _frameType, u32 _frameIndex );
+        const IFrame* getFrame( FrameType _frameType, u32 _frameIndex ) const;
+
+        DynamicFrame*   getDynamicFrame( PhysicsID _index )   { assert( _index < m_dynamicFrames.size() );   return &m_dynamicFrames[_index]; }
+        const DynamicFrame*   getDynamicFrame( PhysicsID _index )     const { assert( _index < m_dynamicFrames.size() );   return &m_dynamicFrames[_index]; }
+        
+        StaticFrame*    getStaticFrame( PhysicsID _index )    { assert( _index < m_staticFrames.size() );    return &m_staticFrames[_index]; }
+        const StaticFrame*    getStaticFrame( PhysicsID _index )      const { assert( _index < m_staticFrames.size() );    return &m_staticFrames[_index]; }
+        
+        KinematicFrame* getKinematicFrame( PhysicsID _index ) { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
+        const KinematicFrame* getKinematicFrame( PhysicsID _index )   const { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
 
     private:
 

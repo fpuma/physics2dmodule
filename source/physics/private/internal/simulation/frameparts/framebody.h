@@ -34,6 +34,10 @@ namespace puma::physics
 
         bool isValid() const override;
 
+        //Internal=============================================================================================
+        FramePart* getInternalFramePart() { return &m_framePart; }
+        const FramePart* getInternalFramePart() const { return &m_framePart; }
+
     private:
 
         FramePart m_framePart;

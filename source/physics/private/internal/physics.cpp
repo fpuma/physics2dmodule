@@ -45,35 +45,7 @@ namespace puma::physics
 
     namespace
     {
-        const IFrame* internalGetFrame( FrameID _frameId, const std::vector<World>& _worlds, FrameType* _outFrameType = nullptr )
-        {
-            PhysicsID worldIndex = kMaxU32;
-            FrameType frameType = FrameType::Invalid;
-            PhysicsID frameIndex = kMaxU32;
-
-            IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
-
-            const IFrame* framePtr = nullptr;
-
-            switch ( frameType )
-            {
-            case FrameType::Dynamic:    framePtr = _worlds[worldIndex].getDynamicFrame( frameIndex ); break;
-            case FrameType::Static:     framePtr = _worlds[worldIndex].getStaticFrame( frameIndex ); break;
-            case FrameType::Kinematic:  framePtr = _worlds[worldIndex].getKinematicFrame( frameIndex ); break;
-            default: assert( false ); break;
-            }
-
-            assert( nullptr != framePtr );
-
-            if ( nullptr != _outFrameType )
-            {
-                *_outFrameType = frameType;
-            }
-
-            return framePtr;
-        }
-
-        const IFramePart* internalGetFramePart( FramePartID _framePartId, const std::vector<World>& _worlds, FramePartType* _outFramePartType = nullptr )
+        const IFramePart* localGetFramePart( FramePartID _framePartId, const std::vector<World>& _worlds, FramePartType* _outFramePartType = nullptr )
         {
             PhysicsID worldIndex = kMaxU32;
             FrameType frameType = FrameType::Invalid;
@@ -88,22 +60,10 @@ namespace puma::physics
             switch ( framePartType )
             {
             case FramePartType::Body:
-                switch ( frameType )
-                {
-                case FrameType::Dynamic:    framePartPtr = _worlds[worldIndex].getDynamicFrame( frameIndex )->getFrameBody( framePartIndex ); break;
-                case FrameType::Static:     framePartPtr = _worlds[worldIndex].getStaticFrame( frameIndex )->getFrameBody( framePartIndex ); break;
-                case FrameType::Kinematic:  framePartPtr = _worlds[worldIndex].getKinematicFrame( frameIndex )->getFrameBody( framePartIndex ); break;
-                default: assert( false ); break;
-                }
+                framePartPtr = _worlds[worldIndex].getInternalFrame( frameType, frameIndex )->getFrameBody( framePartIndex ); 
                 break;
             case FramePartType::Trigger:
-                switch ( frameType )
-                {
-                case FrameType::Dynamic:    framePartPtr = _worlds[worldIndex].getDynamicFrame( frameIndex )->getFrameTrigger( framePartIndex ); break;
-                case FrameType::Static:     framePartPtr = _worlds[worldIndex].getStaticFrame( frameIndex )->getFrameTrigger( framePartIndex ); break;
-                case FrameType::Kinematic:  framePartPtr = _worlds[worldIndex].getKinematicFrame( frameIndex )->getFrameTrigger( framePartIndex ); break;
-                default: assert( false ); break;
-                }
+                framePartPtr = _worlds[worldIndex].getInternalFrame( frameType, frameIndex )->getFrameTrigger( framePartIndex );
                 break;
             default: assert( false ); break;
             }
@@ -121,77 +81,127 @@ namespace puma::physics
 
     IFrame* Physics::getFrame( FrameID _frameId )
     {
-        return const_cast<IFrame*>(internalGetFrame( _frameId, m_worlds ));
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+        assert( worldIndex < m_worlds.size() );
+
+        return m_worlds[worldIndex].getFrame( frameType, frameIndex );
     }
 
     const IFrame* Physics::getFrame( FrameID _frameId ) const
     {
-        return internalGetFrame( _frameId, m_worlds );
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+        assert( worldIndex < m_worlds.size() );
+
+        return m_worlds[worldIndex].getFrame( frameType, frameIndex );
     }
 
     DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) 
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const DynamicFrame* result = static_cast<const DynamicFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Dynamic );
-        return const_cast<DynamicFrame*>(result);
+
+        return m_worlds[worldIndex].getDynamicFrame( frameIndex );
     }
 
     const DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) const
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const DynamicFrame* result = static_cast<const DynamicFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Dynamic );
-        return result;
+
+        return m_worlds[worldIndex].getDynamicFrame( frameIndex );
     }
 
     StaticFrame* Physics::getStaticFrame( FrameID _frameId ) 
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const StaticFrame* result = static_cast<const StaticFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Static );
-        return const_cast<StaticFrame*>(result);
+
+        return m_worlds[worldIndex].getStaticFrame( frameIndex );
     }
 
     const StaticFrame* Physics::getStaticFrame( FrameID _frameId ) const
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const StaticFrame* result = static_cast<const StaticFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Static );
-        return result;
+
+        return m_worlds[worldIndex].getStaticFrame( frameIndex );
     }
 
     KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) 
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const KinematicFrame* result = static_cast<const KinematicFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Kinematic );
-        return const_cast<KinematicFrame*>(result);
+
+        return m_worlds[worldIndex].getKinematicFrame( frameIndex );
     }
 
     const KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) const
     {
+        PhysicsID worldIndex = kMaxU32;
         FrameType frameType = FrameType::Invalid;
-        const KinematicFrame* result = static_cast<const KinematicFrame*>(internalGetFrame( _frameId, m_worlds, &frameType ));
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Kinematic );
-        return result;
+
+        return m_worlds[worldIndex].getKinematicFrame( frameIndex );
     }
 
     IFramePart* Physics::getFramePart( FramePartID _framePartId ) 
     {
-        return const_cast<IFramePart*>(internalGetFramePart( _framePartId, m_worlds ));
+        return const_cast<IFramePart*>(localGetFramePart( _framePartId, m_worlds ));
     }
 
     const IFramePart* Physics::getFramePart( FramePartID _framePartId ) const
     {
-        return internalGetFramePart( _framePartId, m_worlds );
+        return localGetFramePart( _framePartId, m_worlds );
     }
 
     FrameBody* Physics::getFrameBody( FramePartID _framePartId ) 
     {
         FramePartType framePartType = FramePartType::Invalid;
 
-        const FrameBody* result = static_cast<const FrameBody*>(internalGetFramePart( _framePartId, m_worlds, &framePartType ));
+        const FrameBody* result = static_cast<const FrameBody*>(localGetFramePart( _framePartId, m_worlds, &framePartType ));
         assert( framePartType == FramePartType::Body );
 
         return const_cast<FrameBody*>(result);
@@ -201,7 +211,7 @@ namespace puma::physics
     {
         FramePartType framePartType = FramePartType::Invalid;
 
-        const FrameBody* result = static_cast<const FrameBody*>(internalGetFramePart( _framePartId, m_worlds, &framePartType ));
+        const FrameBody* result = static_cast<const FrameBody*>(localGetFramePart( _framePartId, m_worlds, &framePartType ));
         assert( framePartType == FramePartType::Body );
 
         return result;
@@ -211,7 +221,7 @@ namespace puma::physics
     {
         FramePartType framePartType = FramePartType::Invalid;
 
-        const FrameTrigger* result = static_cast<const FrameTrigger*>(internalGetFramePart( _framePartId, m_worlds, &framePartType ));
+        const FrameTrigger* result = static_cast<const FrameTrigger*>(localGetFramePart( _framePartId, m_worlds, &framePartType ));
         assert( framePartType == FramePartType::Trigger );
 
         return const_cast<FrameTrigger*>(result);
@@ -221,7 +231,7 @@ namespace puma::physics
     {
         FramePartType framePartType = FramePartType::Invalid;
 
-        const FrameTrigger* result = static_cast<const FrameTrigger*>(internalGetFramePart( _framePartId, m_worlds, &framePartType ));
+        const FrameTrigger* result = static_cast<const FrameTrigger*>(localGetFramePart( _framePartId, m_worlds, &framePartType ));
         assert( framePartType == FramePartType::Trigger );
 
         return result;

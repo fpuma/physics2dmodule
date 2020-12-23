@@ -16,6 +16,8 @@ namespace puma::physics
         static const FramePartID buildFrameBodyID( PhysicsID _frameId, PhysicsID _framePartIndex );
         static const FramePartID buildFrameTriggerID( PhysicsID _frameId, PhysicsID _framePartIndex );
 
+        static void readWorldID( WorldID _worldId, PhysicsID& _worldIndex );
+
         static void readFrameID( FrameID _id, PhysicsID& _worldIndex, FrameType& _frameType, PhysicsID& _frameIndex );
 
         static void readFramePartID( FramePartID _id, PhysicsID& _worldIndex, FrameType& _frameType, PhysicsID& _frameIndex, FramePartType& _framePartType, PhysicsID& _framePartIndex );

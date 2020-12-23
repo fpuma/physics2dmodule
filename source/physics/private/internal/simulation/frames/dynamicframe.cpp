@@ -46,6 +46,36 @@ namespace puma::physics
         return m_frame.addTrigger( _triggerInfo );
     }
 
+    IFramePart* DynamicFrame::getFramePart( const FramePartID& _framePartId )
+    {
+        return m_frame.getFramePart( _framePartId );
+    }
+
+    FrameBody* DynamicFrame::getBody( const FramePartID& _framePartId )
+    {
+        return m_frame.getBody( _framePartId );
+    }
+
+    FrameTrigger* DynamicFrame::getTrigger( const FramePartID& _framePartId )
+    {
+        return m_frame.getTrigger( _framePartId );
+    }
+
+    const IFramePart* DynamicFrame::getFramePart( const FramePartID& _framePartId ) const
+    {
+        return m_frame.getFramePart( _framePartId );
+    }
+
+    const FrameBody* DynamicFrame::getBody( const FramePartID& _framePartId ) const
+    {
+        return m_frame.getBody( _framePartId );
+    }
+
+    const FrameTrigger* DynamicFrame::getTrigger( const FramePartID& _framePartId ) const
+    {
+        return m_frame.getTrigger( _framePartId );
+    }
+
     bool DynamicFrame::isValid() const
     {
         return m_frame.isValid();
