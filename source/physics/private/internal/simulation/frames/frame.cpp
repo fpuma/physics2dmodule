@@ -50,7 +50,7 @@ namespace puma::physics
 
     float Frame::getAngle() const
     {
-        return m_b2Body->GetAngle();
+        return TO_DEGREES( m_b2Body->GetAngle() );
     }
 
     void Frame::setAngle( float _angle )

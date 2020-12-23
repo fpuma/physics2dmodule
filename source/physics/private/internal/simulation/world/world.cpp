@@ -27,7 +27,7 @@ namespace puma::physics
             _bodyDef.linearVelocity = { _frameInfo.linearVelocity.x, _frameInfo.linearVelocity.y };
             _bodyDef.angularVelocity = _frameInfo.angularVelocity;
             _bodyDef.linearDamping = _frameInfo.linearDamping;
-            _bodyDef.angularDamping = _frameInfo.angularDamping;
+            _bodyDef.angularDamping = TO_RADIANS(_frameInfo.angularDamping);
             //_bodyDef.allowSleep
             //_bodyDef.awake
             _bodyDef.fixedRotation = _frameInfo.preventRotation;

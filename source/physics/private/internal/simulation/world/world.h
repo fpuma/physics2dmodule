@@ -11,6 +11,9 @@
 
 #include <box2d/b2_world.h>
 
+#define TO_RADIANS(x) (x*3.1416f)/180.0f
+#define TO_DEGREES(x) (x*180.0f)/3.1416f
+
 namespace puma::physics
 {
     struct FrameInfo;
