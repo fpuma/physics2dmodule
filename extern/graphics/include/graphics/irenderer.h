@@ -1,23 +1,25 @@
 #pragma once
 
-namespace puma::gfx
+namespace puma::app
 {
     class Texture;
     struct Extent;
     struct Color;
 
-    class IRenderer
+    class IRenderer : public NonCopyable
     {
     public:
-        IRenderer() = default;
         virtual ~IRenderer() = default;
-
-        IRenderer( const IRenderer& _other ) = delete;
-        IRenderer& operator= ( const IRenderer& _other ) = delete;
 
         virtual bool isValid() const = 0;
         virtual void beginRender() = 0;
         virtual void endRender() = 0;
+
+        virtual void setDefaultBackgroundColor( Color _bgColor ) = 0;
+
+        virtual const RendererHandle getRendererHandle() const = 0;
+        virtual RendererHandle getRendererHandle() = 0;
+
         virtual void renderTexture( const Texture& _texture, const Extent& _textureExtent, const Extent& _targetExtent, float _rotation ) const = 0;
 
         virtual void renderText( const s32 _xPos, const s32 _yPos, const char* _text ) const = 0;

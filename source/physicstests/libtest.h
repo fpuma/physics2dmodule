@@ -1,7 +1,7 @@
 #pragma once
 #include <precompiledphysics.h>
-#include <graphics/igraphics.h>
-#include <graphics/graphicdefinitions.h>
+#include <graphics/iapplication.h>
+#include <graphics/commondefinitions.h>
 
 #include <physics/iphysics.h>
 #include <physics/collisions/collisionlistener.h>
@@ -22,7 +22,7 @@ using namespace puma::physics;
 using Vec2 = puma::physics::Vec2;
 using RGBA = puma::physics::RGBA;
 
-puma::gfx::Color colorTransform( const RGBA& color )
+puma::app::Color colorTransform( const RGBA& color )
 {
     return { (unsigned char)(color.r * 255.0f), (unsigned char)(color.g * 255.0f), (unsigned char)(color.b * 255.0f), (unsigned char)(color.a * 255.0f) };
 }
@@ -52,7 +52,7 @@ public:
             return (short)_vertex.y;
         } );
 
-        graphics->getRenderer()->renderPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
+        graphics->getDefaultRenderer()->renderPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
     }
 
     void renderSolidPolygon( const std::vector<Vec2>&& _vertices, const RGBA& _color ) override
@@ -70,25 +70,25 @@ public:
             return (short)_vertex.y;
         } );
 
-        graphics->getRenderer()->renderSolidPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
+        graphics->getDefaultRenderer()->renderSolidPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
     }
 
     void renderCircle( const Vec2&& _center, float _radius, const RGBA& _color ) override
     {
-        graphics->getRenderer()->renderCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
+        graphics->getDefaultRenderer()->renderCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
     }
 
     void renderSolidCircle( const Vec2&& _center, float _radius, const RGBA& _color ) override
     {
-        graphics->getRenderer()->renderSolidCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
+        graphics->getDefaultRenderer()->renderSolidCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
     }
 
     void renderSegment( const Vec2&& _point1, const Vec2& _point2, const RGBA& _color ) override
     {
-        graphics->getRenderer()->renderSegment( (int)_point1.x, (int)_point1.y, (int)_point2.x, (int)_point2.y, colorTransform( _color ) );
+        graphics->getDefaultRenderer()->renderSegment( (int)_point1.x, (int)_point1.y, (int)_point2.x, (int)_point2.y, colorTransform( _color ) );
     }
 
-    puma::gfx::IGraphics* graphics = nullptr;
+    puma::app::IApplication* graphics = nullptr;
 };
 
 class MyCollisionListener : public ICollisionListener
@@ -114,7 +114,7 @@ public:
     LibTest()
         : m_physics( puma::physics::IPhysics::create() ) {}
 
-    void init( puma::gfx::IGraphics* _graphics )
+    void init( puma::app::IApplication* _graphics )
     {
         m_worldId = m_physics->addWorld( Vec2{} );
         std::unique_ptr<MyDebugDraw> dbgDraw = std::make_unique<MyDebugDraw>();

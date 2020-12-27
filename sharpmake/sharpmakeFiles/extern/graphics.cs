@@ -18,13 +18,13 @@ namespace Puma
             
             if(target.Optimization == Sharpmake.Optimization.Debug)
             {
-                conf.LibraryFiles.Add("graphics_d.lib"); 
+                conf.LibraryFiles.Add("gfx2dapp_d.lib"); 
                 conf.LibraryFiles.Add("sdlgfx_d.lib");
                 conf.LibraryFiles.Add("utils_d.lib");
             }
             else
             {
-                conf.LibraryFiles.Add("graphics_r.lib");
+                conf.LibraryFiles.Add("gfx2dapp_r.lib");
                 conf.LibraryFiles.Add("sdlgfx_r.lib");
                 conf.LibraryFiles.Add("utils_r.lib");
             }

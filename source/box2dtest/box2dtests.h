@@ -1,6 +1,6 @@
 #pragma once
 //#include "precompiledpt.h"
-#include <precompiledgraphics.h>
+#include <precompiledapplication.h>
 
 #include <box2d/b2_body.h>
 #include <box2d/b2_circle_shape.h>
@@ -12,8 +12,8 @@
 #include <box2d/b2_revolute_joint.h>
 #include <box2d/b2_world.h>
 
-#include <graphics/igraphics.h>
-#include <graphics/graphicdefinitions.h>
+#include <graphics/iapplication.h>
+#include <graphics/commondefinitions.h>
 
 
 #include <string>
@@ -23,7 +23,7 @@
 
 #include <iostream>
 
-puma::gfx::Color colorTransform( const b2Color& color )
+puma::app::Color colorTransform( const b2Color& color )
 {
 	return { (unsigned char)(color.r * 255.0f), (unsigned char)(color.g * 255.0f), (unsigned char)(color.b * 255.0f), (unsigned char)(color.a * 255.0f) };
 }
@@ -68,7 +68,7 @@ public:
 			yCoords[i] = (short)vertices[i].y;
 		}
 		
-		graphics->getRenderer()->renderPolygon( xCoords.data(), yCoords.data(), vertexCount, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderPolygon( xCoords.data(), yCoords.data(), vertexCount, colorTransform( color ) );
 	}
 
 	void DrawSolidPolygon( const b2Vec2* vertices, int32 vertexCount, const b2Color& color ) override
@@ -82,22 +82,22 @@ public:
 			yCoords[i] = (short)vertices[i].y;
 		}
 
-		graphics->getRenderer()->renderSolidPolygon( xCoords.data(), yCoords.data(), vertexCount, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderSolidPolygon( xCoords.data(), yCoords.data(), vertexCount, colorTransform( color ) );
 	}
 
 	void DrawCircle( const b2Vec2& center, float radius, const b2Color& color ) override
 	{
-		graphics->getRenderer()->renderCircle( (int)center.x, (int)center.y, (int)radius, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderCircle( (int)center.x, (int)center.y, (int)radius, colorTransform( color ) );
 	}
 
 	void DrawSolidCircle( const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color ) override
 	{
-		graphics->getRenderer()->renderSolidCircle( (int)center.x, (int)center.y, (int)radius, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderSolidCircle( (int)center.x, (int)center.y, (int)radius, colorTransform( color ) );
 	}
 
 	void DrawSegment( const b2Vec2& p1, const b2Vec2& p2, const b2Color& color ) override
 	{
-		graphics->getRenderer()->renderSegment( (int)p1.x, (int)p1.y, (int)p2.x, (int)p2.y, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderSegment( (int)p1.x, (int)p1.y, (int)p2.x, (int)p2.y, colorTransform( color ) );
 	}
 
 	void DrawTransform( const b2Transform& xf ) override
@@ -107,10 +107,10 @@ public:
 
 	void DrawPoint( const b2Vec2& p, float size, const b2Color& color ) override
 	{
-		graphics->getRenderer()->renderSolidCircle( (int)p.x, (int)p.y, (int)size, colorTransform( color ) );
+		graphics->getDefaultRenderer()->renderSolidCircle( (int)p.x, (int)p.y, (int)size, colorTransform( color ) );
 	}
 
-	puma::gfx::IGraphics* graphics = nullptr;
+	puma::app::IApplication* graphics = nullptr;
 };
 
 class MyContactListener : public b2ContactListener
@@ -143,7 +143,7 @@ public:
 		m_testDebugDraw.SetFlags( b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit );
 	}
 
-	void init( puma::gfx::IGraphics* _graphics )
+	void init( puma::app::IApplication* _graphics )
 	{
 		b2Vec2 gravity( 0.0f, 0.0f );
 		m_world.SetGravity( gravity );
@@ -234,7 +234,7 @@ public:
 		m_testDebugDraw.SetFlags( b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit );
 	}
 
-	void init( puma::gfx::IGraphics* _graphics )
+	void init( puma::app::IApplication* _graphics )
 	{
 		b2Vec2 gravity( 0.0f, 0.0f );
 		m_world.SetGravity( gravity );
@@ -323,7 +323,7 @@ public:
 		m_testDebugDraw.SetFlags( b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit );
 	}
 
-	void init( puma::gfx::IGraphics* _graphics )
+	void init( puma::app::IApplication* _graphics )
 	{
 		b2Vec2 gravity( 0.0f, 0.0f );
 		m_world.SetGravity( gravity );

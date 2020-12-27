@@ -1,7 +1,7 @@
-#include <precompiledgraphics.h>
+#include <precompiledapplication.h>
 
-#include <graphics/graphicdefinitions.h>
-#include <graphics/igraphics.h>
+#include <graphics/commondefinitions.h>
+#include <graphics/iapplication.h>
 #include <graphics/irenderer.h>
 
 #include <chrono>
@@ -20,10 +20,11 @@
 
 int main( int argc, char* argv[] )
 {
-	auto graphicsPtr = puma::gfx::IGraphics::create();
+	auto graphicsPtr = puma::app::IApplication::create();
 
-	puma::gfx::Extent wExtent = { 1000,1000, 100, 100 };
-	graphicsPtr->init( wExtent, "PhysicsTests" );
+	puma::app::Extent wExtent = { 1000,1000, 100, 100 };
+	graphicsPtr->init();
+	graphicsPtr->createWindow( wExtent, "PhysicsTest" );
 
 	//========================================================================
 
@@ -35,7 +36,7 @@ int main( int argc, char* argv[] )
 	{
 		graphicsPtr->update();
 		libTest->update();
-		puma::gfx::IRenderer* renderer = graphicsPtr->getRenderer();
+		puma::app::IRenderer* renderer = graphicsPtr->getDefaultRenderer();
 
 		renderer->beginRender();
 		libTest->render();
