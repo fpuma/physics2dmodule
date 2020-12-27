@@ -7,6 +7,8 @@
 
 namespace puma::physics
 {
+    using WorldPtr = std::unique_ptr<World>;
+
     class Physics : public IPhysics, public NonCopyable
     {
     public:
@@ -14,10 +16,7 @@ namespace puma::physics
         void update( float _deltaTime ) override;
 
         WorldID addWorld( Vec2 _gravity ) override;
-
-        void setDefaultWorld( WorldID _worldId ) override { m_defaultWorldIndex = _worldId.value(); }
-        World* getDefaultWorld() override{ return &m_worlds[m_defaultWorldIndex]; }
-        const World* getDefaultWorld() const override { return &m_worlds[m_defaultWorldIndex]; }
+        void removeWorld( WorldID _worldId ) override;
 
         World* getWorld( WorldID _worldId ) override;
         const World* getWorld( WorldID _worldId ) const override;
@@ -49,7 +48,7 @@ namespace puma::physics
 
     private:
 
-        std::vector<World> m_worlds = {};
+        std::vector<WorldPtr> m_worlds = {};
 
         u32 m_defaultWorldIndex = kMaxU32;
     };

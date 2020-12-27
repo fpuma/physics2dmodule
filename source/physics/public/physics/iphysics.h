@@ -15,10 +15,7 @@ namespace puma::physics
         virtual void update( float _deltaTime ) = 0;
 
         virtual WorldID addWorld( Vec2 _gravity ) = 0;
-
-        virtual void setDefaultWorld( WorldID _worldId ) = 0;
-        virtual IWorld* getDefaultWorld() = 0;
-        virtual const IWorld* getDefaultWorld() const = 0;
+        virtual void removeWorld( WorldID _worldId ) = 0;
 
         virtual IWorld* getWorld( WorldID _worldId ) = 0;
         virtual const IWorld* getWorld( WorldID _worldId ) const = 0;

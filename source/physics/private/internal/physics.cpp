@@ -15,9 +15,9 @@ namespace puma::physics
 
     void Physics::update( float _deltaTime )
     {
-        for(World& world : m_worlds)
+        for( WorldPtr& world : m_worlds)
         {
-            world.update( _deltaTime );
+            world->update( _deltaTime );
         }
     }
 
@@ -25,27 +25,35 @@ namespace puma::physics
     {
         assert( m_worlds.size() < kMaxWorldCount );
         WorldID newWorldId{ (PhysicsID)m_worlds.size() };
-        m_worlds.emplace_back( _gravity, newWorldId );
+        m_worlds.emplace_back( std::make_unique<World>( _gravity, newWorldId ) );
         return newWorldId;
+    }
+
+    void Physics::removeWorld( WorldID _worldId )
+    {
+        auto foundIt = std::find_if( m_worlds.begin(), m_worlds.end(), [&]( const WorldPtr& _world ) { return _world->getWorldID().value() == _worldId.value(); } );
+
+        assert( foundIt != m_worlds.end() );
+        m_worlds.erase( foundIt );
     }
 
     World* Physics::getWorld( WorldID _worldId )
     {
         assert( _worldId.value() < kMaxWorldCount );
         assert( _worldId.value() < m_worlds.size() );
-        return &m_worlds[_worldId.value()];
+        return m_worlds[_worldId.value()].get();
     }
 
     const World* Physics::getWorld( WorldID _worldId ) const
     {
         assert( _worldId.value() < kMaxWorldCount );
         assert( _worldId.value() < m_worlds.size() );
-        return &m_worlds[_worldId.value()];
+        return m_worlds[_worldId.value()].get();
     }
 
     namespace
     {
-        const IFramePart* localGetFramePart( FramePartID _framePartId, const std::vector<World>& _worlds, FramePartType* _outFramePartType = nullptr )
+        const IFramePart* localGetFramePart( FramePartID _framePartId, const std::vector<WorldPtr>& _worlds, FramePartType* _outFramePartType = nullptr )
         {
             PhysicsID worldIndex = kMaxU32;
             FrameType frameType = FrameType::Invalid;
@@ -60,10 +68,10 @@ namespace puma::physics
             switch ( framePartType )
             {
             case FramePartType::Body:
-                framePartPtr = _worlds[worldIndex].getInternalFrame( frameType, frameIndex )->getFrameBody( framePartIndex ); 
+                framePartPtr = _worlds[worldIndex]->getInternalFrame( frameType, frameIndex )->getFrameBody( framePartIndex ); 
                 break;
             case FramePartType::Trigger:
-                framePartPtr = _worlds[worldIndex].getInternalFrame( frameType, frameIndex )->getFrameTrigger( framePartIndex );
+                framePartPtr = _worlds[worldIndex]->getInternalFrame( frameType, frameIndex )->getFrameTrigger( framePartIndex );
                 break;
             default: assert( false ); break;
             }
@@ -88,7 +96,7 @@ namespace puma::physics
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
         assert( worldIndex < m_worlds.size() );
 
-        return m_worlds[worldIndex].getFrame( frameType, frameIndex );
+        return m_worlds[worldIndex]->getFrame( frameType, frameIndex );
     }
 
     const IFrame* Physics::getFrame( FrameID _frameId ) const
@@ -100,7 +108,7 @@ namespace puma::physics
         IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
         assert( worldIndex < m_worlds.size() );
 
-        return m_worlds[worldIndex].getFrame( frameType, frameIndex );
+        return m_worlds[worldIndex]->getFrame( frameType, frameIndex );
     }
 
     DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) 
@@ -114,7 +122,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Dynamic );
 
-        return m_worlds[worldIndex].getDynamicFrame( frameIndex );
+        return m_worlds[worldIndex]->getDynamicFrame( frameIndex );
     }
 
     const DynamicFrame* Physics::getDynamicFrame( FrameID _frameId ) const
@@ -128,7 +136,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Dynamic );
 
-        return m_worlds[worldIndex].getDynamicFrame( frameIndex );
+        return m_worlds[worldIndex]->getDynamicFrame( frameIndex );
     }
 
     StaticFrame* Physics::getStaticFrame( FrameID _frameId ) 
@@ -142,7 +150,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Static );
 
-        return m_worlds[worldIndex].getStaticFrame( frameIndex );
+        return m_worlds[worldIndex]->getStaticFrame( frameIndex );
     }
 
     const StaticFrame* Physics::getStaticFrame( FrameID _frameId ) const
@@ -156,7 +164,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Static );
 
-        return m_worlds[worldIndex].getStaticFrame( frameIndex );
+        return m_worlds[worldIndex]->getStaticFrame( frameIndex );
     }
 
     KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) 
@@ -170,7 +178,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Kinematic );
 
-        return m_worlds[worldIndex].getKinematicFrame( frameIndex );
+        return m_worlds[worldIndex]->getKinematicFrame( frameIndex );
     }
 
     const KinematicFrame* Physics::getKinematicFrame( FrameID _frameId ) const
@@ -184,7 +192,7 @@ namespace puma::physics
         assert( worldIndex < m_worlds.size() );
         assert( frameType == FrameType::Kinematic );
 
-        return m_worlds[worldIndex].getKinematicFrame( frameIndex );
+        return m_worlds[worldIndex]->getKinematicFrame( frameIndex );
     }
 
     IFramePart* Physics::getFramePart( FramePartID _framePartId ) 
