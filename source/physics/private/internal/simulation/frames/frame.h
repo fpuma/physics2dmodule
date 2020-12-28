@@ -11,6 +11,9 @@ namespace puma::physics
 {
     class World;
 
+    using FrameBodyPtr = std::unique_ptr<FrameBody>;
+    using FrameTriggerPtr = std::unique_ptr<FrameTrigger>;
+
     class Frame : public NonCopyable
     {
     public:
@@ -71,22 +74,25 @@ namespace puma::physics
         IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex );
         const IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex ) const;
 
-        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
-        const FrameBody* getFrameBody( PhysicsID _index ) const { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
+        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return m_frameBodies[_index].get(); }
+        const FrameBody* getFrameBody( PhysicsID _index ) const { assert( _index < m_frameBodies.size() ); return m_frameBodies[_index].get(); }
         
-        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
-        const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
+        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return m_frameTriggers[_index].get(); }
+        const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { assert( _index < m_frameTriggers.size() ); return m_frameTriggers[_index].get(); }
 
         const b2Body* getB2Body() const { return m_b2Body; }
         b2Body* getB2Body() { return m_b2Body; }
 
     private:
+
+        void removeFramePart( FramePartType _framePartType, PhysicsID _framePartIndex );
+
         b2Body* m_b2Body = nullptr;
 
         const World* m_world = nullptr;
 
-        std::vector<FrameBody> m_frameBodies;
-        std::vector<FrameTrigger> m_frameTriggers;
+        std::vector<FrameBodyPtr> m_frameBodies;
+        std::vector<FrameTriggerPtr> m_frameTriggers;
 
         FrameID m_frameId;
     };

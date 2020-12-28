@@ -102,7 +102,7 @@ namespace puma::physics
 
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
-        m_dynamicFrames.emplace_back( body, this, id );
+        m_dynamicFrames.emplace_back( std::make_unique<DynamicFrame>( body, this, id ) );
         body->GetUserData().pointer = 0;
 
         return id;
@@ -116,7 +116,7 @@ namespace puma::physics
 
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
-        m_staticFrames.emplace_back( body, this, id );
+        m_staticFrames.emplace_back( std::make_unique<StaticFrame>( body, this, id ) );
         body->GetUserData().pointer = 0;
 
         return id;
@@ -130,7 +130,7 @@ namespace puma::physics
 
         b2Body* body = m_b2World.CreateBody( &bodyDef );
         FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
-        m_kinematicFrames.emplace_back( body, this, id );
+        m_kinematicFrames.emplace_back( std::make_unique<KinematicFrame>( body, this, id ) );
         body->GetUserData().pointer = 0;
 
         return id;
@@ -273,6 +273,7 @@ namespace puma::physics
         Frame* framePtr = getInternalFrame( frameType, frameIndex );
 
         m_b2World.DestroyBody( framePtr->getB2Body() );
+        removeFrame( frameType, frameIndex );
     }
 
     void World::setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility )
@@ -370,5 +371,31 @@ namespace puma::physics
         }
 
         return framePtr;
+    }
+
+    void World::removeFrame( FrameType _frameType, u32 _frameIndex )
+    {
+        switch ( _frameType )
+        {
+        case FrameType::Dynamic:    
+        {
+            assert( _frameIndex < m_dynamicFrames.size() );
+            m_dynamicFrames.erase( m_dynamicFrames.begin() + _frameIndex );
+            break;
+        }
+        case FrameType::Static:  
+        {
+            assert( _frameIndex < m_staticFrames.size() );
+            m_staticFrames.erase( m_staticFrames.begin() + _frameIndex );
+            break;
+        }
+        case FrameType::Kinematic:  
+        {
+            assert( _frameIndex < m_kinematicFrames.size() );
+            m_kinematicFrames.erase( m_kinematicFrames.begin() + _frameIndex );
+            break;
+        }
+        default: assert( false ); break;
+        }
     }
 }

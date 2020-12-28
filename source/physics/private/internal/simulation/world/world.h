@@ -18,6 +18,10 @@ namespace puma::physics
 {
     struct FrameInfo;
 
+    using DynamicFramePtr = std::unique_ptr<DynamicFrame>;
+    using StaticFramePtr = std::unique_ptr<StaticFrame>;
+    using KinematicFramePtr = std::unique_ptr<KinematicFrame>;
+
     class World : public IWorld, public NonCopyable
     {
     public:
@@ -65,16 +69,18 @@ namespace puma::physics
         IFrame* getFrame( FrameType _frameType, u32 _frameIndex );
         const IFrame* getFrame( FrameType _frameType, u32 _frameIndex ) const;
 
-        DynamicFrame*   getDynamicFrame( PhysicsID _index )   { assert( _index < m_dynamicFrames.size() );   return &m_dynamicFrames[_index]; }
-        const DynamicFrame*   getDynamicFrame( PhysicsID _index )     const { assert( _index < m_dynamicFrames.size() );   return &m_dynamicFrames[_index]; }
+        DynamicFrame*   getDynamicFrame( PhysicsID _index )   { assert( _index < m_dynamicFrames.size() );   return m_dynamicFrames[_index].get(); }
+        const DynamicFrame*   getDynamicFrame( PhysicsID _index )     const { assert( _index < m_dynamicFrames.size() );   return m_dynamicFrames[_index].get(); }
         
-        StaticFrame*    getStaticFrame( PhysicsID _index )    { assert( _index < m_staticFrames.size() );    return &m_staticFrames[_index]; }
-        const StaticFrame*    getStaticFrame( PhysicsID _index )      const { assert( _index < m_staticFrames.size() );    return &m_staticFrames[_index]; }
+        StaticFrame*    getStaticFrame( PhysicsID _index )    { assert( _index < m_staticFrames.size() );    return m_staticFrames[_index].get(); }
+        const StaticFrame*    getStaticFrame( PhysicsID _index )      const { assert( _index < m_staticFrames.size() );    return m_staticFrames[_index].get(); }
         
-        KinematicFrame* getKinematicFrame( PhysicsID _index ) { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
-        const KinematicFrame* getKinematicFrame( PhysicsID _index )   const { assert( _index < m_kinematicFrames.size() ); return &m_kinematicFrames[_index]; }
+        KinematicFrame* getKinematicFrame( PhysicsID _index ) { assert( _index < m_kinematicFrames.size() ); return m_kinematicFrames[_index].get(); }
+        const KinematicFrame* getKinematicFrame( PhysicsID _index )   const { assert( _index < m_kinematicFrames.size() ); return m_kinematicFrames[_index].get(); }
 
     private:
+
+        void removeFrame( FrameType _frameType, u32 _frameIndex );
 
         float m_simulationTimeStep = 1.0f / 60.0f;
         float m_timeAccumulator = 0.0f;
@@ -86,9 +92,9 @@ namespace puma::physics
         InternalDebugDraw  m_internalDebugDraw;
         InternalCollisionListener m_internalCollisionListener;
 
-        std::vector<DynamicFrame> m_dynamicFrames;
-        std::vector<StaticFrame> m_staticFrames;
-        std::vector<KinematicFrame> m_kinematicFrames;
+        std::vector<DynamicFramePtr> m_dynamicFrames;
+        std::vector<StaticFramePtr> m_staticFrames;
+        std::vector<KinematicFramePtr> m_kinematicFrames;
         
         b2World m_b2World;
 
