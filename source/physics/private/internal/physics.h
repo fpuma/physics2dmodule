@@ -49,7 +49,5 @@ namespace puma::physics
     private:
 
         std::vector<WorldPtr> m_worlds = {};
-
-        u32 m_defaultWorldIndex = kMaxU32;
     };
 }
