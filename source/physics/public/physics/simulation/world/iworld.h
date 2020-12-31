@@ -1,6 +1,6 @@
 #pragma once
 #include <physics/debug/debugdraw.h>
-#include <physics/geometry/vec2.h>
+#include <utils/geometry/vec2.h>
 
 namespace puma::physics
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <physics/simulation/frameparts/bodyinfo.h>
 #include <physics/simulation/frameparts/triggerinfo.h>
-#include <physics/geometry/vec2.h>
+#include <utils/geometry/vec2.h>
 
 namespace puma::physics
 {

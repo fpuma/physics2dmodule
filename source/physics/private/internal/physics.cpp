@@ -6,6 +6,8 @@
 #include <internal/ids/idhelper.h>
 #include <internal/simulation/world/world.h>
 
+#include <utils/geometry/vec2.h>
+
 namespace puma::physics
 {
     std::unique_ptr<IPhysics> IPhysics::create()

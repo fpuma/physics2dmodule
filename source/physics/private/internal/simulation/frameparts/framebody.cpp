@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <physics/geometry/shapes.h>    
+#include <utils/geometry/shapes/shape.h>    
 
 #include <internal/simulation/frameparts/framebody.h>
 

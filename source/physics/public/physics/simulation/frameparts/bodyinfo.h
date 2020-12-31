@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/geometry/shapes.h>
+#include <utils/geometry/shapes/shape.h>
 
 namespace puma::physics
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/geometry/vec2.h>
+#include <utils/geometry/vec2.h>
 #include <physics/simulation/frames/iframe.h>
 
 #include <internal/simulation/frameparts/framebody.h>

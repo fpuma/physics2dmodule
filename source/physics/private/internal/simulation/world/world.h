@@ -1,6 +1,6 @@
 #pragma once
 #include <physics/collisions/collisionlistener.h>
-#include <physics/geometry/vec2.h>
+#include <utils/geometry/vec2.h>
 #include <physics/simulation/world/iworld.h>
 
 #include <internal/simulation/frames/dynamicframe.h>

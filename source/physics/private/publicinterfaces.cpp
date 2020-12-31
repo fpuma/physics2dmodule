@@ -2,9 +2,6 @@
 
 #include <physics/collisions/collisionlistener.h>
 #include <physics/debug/debugdraw.h>
-#include <physics/geometry/shapes.h>
-#include <physics/geometry/vec2.h>
-#include <physics/geometry/vec3.h>
 #include <physics/iphysics.h>
 #include <physics/geometry/overlapcheck.h>
 #include <physics/simulation/frameparts/bodyinfo.h>

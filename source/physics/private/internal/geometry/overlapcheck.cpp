@@ -2,7 +2,7 @@
 
 #include <physics/geometry/overlapcheck.h>
 
-#include <physics/geometry/shapes.h>
+#include <utils/geometry/shapes/shape.h>
 
 #include <box2d/b2_collision.h>
 

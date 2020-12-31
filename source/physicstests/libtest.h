@@ -5,21 +5,22 @@
 
 #include <physics/iphysics.h>
 #include <physics/collisions/collisionlistener.h>
-#include <physics/geometry/shapes.h>
-#include <physics/geometry/vec2.h>
 #include <physics/simulation/world/iworld.h>
 #include <physics/simulation/frames/idynamicframe.h>
 #include <physics/simulation/frames/istaticframe.h>
+#include <physics/simulation/frames/frameinfo.h>
 #include <physics/simulation/frameparts/iframepart.h>
 
-#include <physics/simulation/frames/frameinfo.h>
+#include <utils/geometry/shapes/shape.h>
+#include <utils/geometry/vec2.h>
 
 #include <bitset>
 #include <iostream>
 
+using namespace puma;
 using namespace puma::physics;
 
-using Vec2 = puma::physics::Vec2;
+using Vec2 = puma::Vec2;
 using RGBA = puma::physics::RGBA;
 
 puma::app::Color colorTransform( const RGBA& color )

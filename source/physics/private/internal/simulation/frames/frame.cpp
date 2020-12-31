@@ -2,7 +2,7 @@
 
 #include <internal/simulation/frames/frame.h>
 
-#include <physics/geometry/shapes.h>
+#include <utils/geometry/shapes/shape.h>
 
 #include <internal/ids/idhelper.h>
 #include <internal/simulation/frames/framehelpers.h>
