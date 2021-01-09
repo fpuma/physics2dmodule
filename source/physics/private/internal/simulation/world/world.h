@@ -30,7 +30,7 @@ namespace puma::physics
         World( Vec2 _gravity, WorldID _id );
         ~World();
 
-        WorldID getWorldID() const { return m_worldId; }
+        WorldID getWorldID() const override { return m_worldId; }
 
         void update( float _deltaTime ) override;
 

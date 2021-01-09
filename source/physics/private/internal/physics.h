@@ -49,5 +49,6 @@ namespace puma::physics
     private:
 
         std::vector<WorldPtr> m_worlds = {};
+        u32 m_worldCount = 0;
     };
 }

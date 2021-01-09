@@ -25,18 +25,34 @@ namespace puma::physics
 
     WorldID Physics::addWorld( Vec2 _gravity )
     {
-        assert( m_worlds.size() < kMaxWorldCount );
-        WorldID newWorldId{ (PhysicsID)m_worlds.size() };
-        m_worlds.emplace_back( std::make_unique<World>( _gravity, newWorldId ) );
+        assert( m_worldCount < kMaxWorldCount );
+
+        auto foundIt = std::find( m_worlds.begin(), m_worlds.end(), nullptr );
+
+        WorldID newWorldId;
+
+        if ( foundIt != m_worlds.end() )
+        {
+            s64 worldIndex = std::distance( m_worlds.begin(), foundIt );
+            newWorldId = (PhysicsID)worldIndex;
+            m_worlds[worldIndex] = std::make_unique<World>( _gravity, newWorldId );
+        }
+        else
+        {
+            newWorldId = (PhysicsID)m_worlds.size();
+            m_worlds.emplace_back( std::make_unique<World>( _gravity, newWorldId ) );
+        }
+
+        ++m_worldCount;
         return newWorldId;
     }
 
     void Physics::removeWorld( WorldID _worldId )
     {
         auto foundIt = std::find_if( m_worlds.begin(), m_worlds.end(), [&]( const WorldPtr& _world ) { return _world->getWorldID().value() == _worldId.value(); } );
-
         assert( foundIt != m_worlds.end() );
-        m_worlds.erase( foundIt );
+        foundIt->reset( nullptr );
+        --m_worldCount;
     }
 
     World* Physics::getWorld( WorldID _worldId )

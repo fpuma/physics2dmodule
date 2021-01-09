@@ -16,6 +16,7 @@ namespace Puma
             conf.AddProject<Puma.PhysicsTests>( target );
             conf.AddProject<Puma.Physics>( target );
             conf.AddProject<Puma.Box2DTest>(target);
+            conf.AddProject<Puma.UnitTests>(target);
         }
     }
 

@@ -13,6 +13,8 @@ namespace puma::physics
 
         virtual ~IWorld() {}
 
+        virtual WorldID getWorldID() const = 0;
+
         virtual Vec2 getGravity() const = 0;
         virtual void setGravity( const Vec2& _gravity ) = 0;
 
