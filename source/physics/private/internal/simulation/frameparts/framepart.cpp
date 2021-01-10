@@ -1,8 +1,8 @@
 #include <precompiledphysics.h>
 
-#include <utils/geometry/shapes/shape.h>    
+#include "framepart.h"
 
-#include <internal/simulation/frameparts/framepart.h>
+#include <utils/geometry/shapes/shape.h>    
 
 #include <box2d/b2_body.h>
 #include <box2d/b2_fixture.h>

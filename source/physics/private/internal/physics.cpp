@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/physics.h>
+#include "physics.h"
 
 #include <internal/ids/ids.h>
 #include <internal/ids/idhelper.h>

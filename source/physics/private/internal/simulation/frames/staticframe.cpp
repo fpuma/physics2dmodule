@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/frames/staticframe.h>
+#include "staticframe.h"
 
 #include <box2d/b2_body.h>
 

@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/world/internaldebugdraw.h>
+#include "internaldebugdraw.h"
 
 namespace puma::physics
 {

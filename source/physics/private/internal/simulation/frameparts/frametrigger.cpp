@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/frameparts/frametrigger.h>
+#include "frametrigger.h"
 
 #include <utils/geometry/shapes/shape.h>    
 

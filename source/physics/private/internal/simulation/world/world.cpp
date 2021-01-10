@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/world/world.h>
+#include "world.h"
 
 #include <physics/collisions/collisionlistener.h>
 #include <physics/simulation/frames/frameinfo.h>
@@ -11,9 +11,9 @@
 #include <internal/simulation/frames/kinematicframe.h>
 
 #include <box2d/b2_body.h>
+#include <box2d/b2_contact.h>
 #include <box2d/b2_draw.h>
 #include <box2d/b2_world.h>
-#include <box2d/b2_contact.h>
 
 namespace puma::physics
 {

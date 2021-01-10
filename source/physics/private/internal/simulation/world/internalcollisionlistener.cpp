@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/world/internalcollisionlistener.h>
+#include "internalcollisionlistener.h"
 
 #include <physics/collisions/collisionlistener.h>
 

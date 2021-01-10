@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <internal/simulation/frames/kinematicframe.h>
+#include "kinematicframe.h"
 
 #include <box2d/b2_body.h>
 
