@@ -9,8 +9,7 @@
 
 namespace puma::physics
 {
-    FrameBody::FrameBody( b2Fixture* _fixture, FramePartID _id )
-        : m_framePart (_fixture, _id)
+    FrameBody::FrameBody()
     {
     }
 

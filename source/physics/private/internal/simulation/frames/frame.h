@@ -11,14 +11,14 @@ namespace puma::physics
 {
     class World;
 
-    using FrameBodyPtr = std::unique_ptr<FrameBody>;
-    using FrameTriggerPtr = std::unique_ptr<FrameTrigger>;
+   /* using FrameBodyPtr = std::unique_ptr<FrameBody>;
+    using FrameTriggerPtr = std::unique_ptr<FrameTrigger>;*/
 
     class Frame : public NonCopyable
     {
     public:
         Frame() = delete;
-        Frame( b2Body* _body, const World* _worldPtr, FrameID _frameId );
+        Frame( const World* _worldPtr, FrameID _frameId );
         Frame( Frame&& _other ) noexcept;
         virtual ~Frame();
 
@@ -50,6 +50,8 @@ namespace puma::physics
 
         FramePartID addBody( const BodyInfo& _bodyInfo );
         FramePartID addTrigger( const TriggerInfo& _triggerInfo );
+        
+        void removeFramePart( const FramePartID& _framePartId );
 
         IFramePart* getFramePart( const FramePartID& _framePartId );
         FrameBody* getBody( const FramePartID& _framePartId );
@@ -58,8 +60,6 @@ namespace puma::physics
         const IFramePart* getFramePart( const FramePartID& _framePartId ) const;
         const FrameBody* getBody( const FramePartID& _framePartId ) const;
         const FrameTrigger* getTrigger( const FramePartID& _framePartId ) const;
-
-        void removeFramePart( const FramePartID& _framePartId );
 
         bool isValid() const;
 
@@ -74,25 +74,27 @@ namespace puma::physics
         IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex );
         const IFramePart* getFramePart( FramePartType _framePartType, u32 _framePartIndex ) const;
 
-        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return m_frameBodies[_index].get(); }
-        const FrameBody* getFrameBody( PhysicsID _index ) const { assert( _index < m_frameBodies.size() ); return m_frameBodies[_index].get(); }
+        FrameBody* getFrameBody( PhysicsID _index ) { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
+        const FrameBody* getFrameBody( PhysicsID _index ) const { assert( _index < m_frameBodies.size() ); return &m_frameBodies[_index]; }
         
-        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return m_frameTriggers[_index].get(); }
-        const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { assert( _index < m_frameTriggers.size() ); return m_frameTriggers[_index].get(); }
+        FrameTrigger* getFrameTrigger( PhysicsID _index ) { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
+        const FrameTrigger* getFrameTrigger( PhysicsID _index ) const { assert( _index < m_frameTriggers.size() ); return &m_frameTriggers[_index]; }
 
         const b2Body* getB2Body() const { return m_b2Body; }
         b2Body* getB2Body() { return m_b2Body; }
 
+        void setB2Body( b2Body* _body ) { m_b2Body = _body; }
+
     private:
 
-        void removeFramePart( FramePartType _framePartType, PhysicsID _framePartIndex );
+        void removeFramePart( FramePart* _framePart, FramePartType _framePartType, PhysicsID _framePartIndex );
 
         b2Body* m_b2Body = nullptr;
 
         const World* m_world = nullptr;
 
-        std::vector<FrameBodyPtr> m_frameBodies;
-        std::vector<FrameTriggerPtr> m_frameTriggers;
+        std::vector<FrameBody> m_frameBodies;
+        std::vector<FrameTrigger> m_frameTriggers;
 
         FrameID m_frameId;
     };

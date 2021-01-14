@@ -13,7 +13,7 @@ namespace puma::physics
     {
     public:
         StaticFrame() = delete;
-        StaticFrame( b2Body* _body, const World* _world, FrameID _id );
+        StaticFrame( const World* _world, FrameID _id );
         StaticFrame( StaticFrame&& _other ) noexcept : m_frame( std::move( _other.m_frame ) ) {}
 
         FrameID getID() const override { return m_frame.getID(); }

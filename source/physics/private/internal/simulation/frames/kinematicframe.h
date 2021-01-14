@@ -13,7 +13,7 @@ namespace puma::physics
     {
     public:
         KinematicFrame() = delete;
-        KinematicFrame( b2Body* _body, const World* _world, FrameID _id );
+        KinematicFrame( const World* _world, FrameID _id );
         KinematicFrame( KinematicFrame&& _other ) noexcept : m_frame( std::move( _other.m_frame ) ) {}
         FrameID getID() const override { return m_frame.getID(); }
 

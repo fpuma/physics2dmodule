@@ -9,9 +9,7 @@
 
 namespace puma::physics
 {
-    FramePart::FramePart( b2Fixture* _fixture, FramePartID _id )
-        : m_b2Fixture (_fixture)
-        , m_framePartId( { _id } )
+    FramePart::FramePart()
     {
     }
 
@@ -20,7 +18,6 @@ namespace puma::physics
         , m_userData( std::move( _other.m_userData ) )
         , m_framePartId( std::move( _other.m_framePartId ) )
     {
-
     }
 
     /*Vec2 Body::getOffset() const
@@ -30,36 +27,55 @@ namespace puma::physics
 
     float FramePart::getFriction() const
     {
+        assert( isValid() );
         return m_b2Fixture->GetFriction();
     }
 
     void FramePart::setFriction( float _friction )
     {
+        assert( isValid() );
         m_b2Fixture->SetFriction( _friction );
     }
 
     float FramePart::getDensity() const
     {
+        assert( isValid() );
         return m_b2Fixture->GetDensity();
     }
 
     void FramePart::setDensity( float _density )
     {
+        assert( isValid() );
         m_b2Fixture->SetDensity( _density );
     }
 
     float FramePart::getRestitution() const
     {
+        assert( isValid() );
         return m_b2Fixture->GetRestitution();
     }
 
     void FramePart::setRestitution( float _restitution )
     {
+        assert( isValid() );
         m_b2Fixture->SetRestitution( _restitution );
     }
 
     bool FramePart::isValid() const
     { 
-        return ( nullptr != m_b2Fixture ) && ( nullptr != m_b2Fixture->GetBody() ) && ( nullptr != m_b2Fixture->GetBody()->GetWorld() );
+        return nullptr != m_b2Fixture;
+    }
+
+    void FramePart::init( b2Fixture* _fixture, FramePartID _id )
+    {
+        assert( !isValid() );
+        m_b2Fixture = _fixture;
+        m_framePartId = _id;
+    }
+
+    void FramePart::uninit()
+    {
+        m_b2Fixture = nullptr;
+        m_framePartId.invalidate();
     }
 }

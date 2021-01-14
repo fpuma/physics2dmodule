@@ -11,8 +11,7 @@ namespace puma::physics
     {
     public:
 
-        FramePart() = delete;
-        FramePart( b2Fixture* _fixture, FramePartID _id );
+        FramePart();
         FramePart( FramePart&& _other ) noexcept;
         virtual float getFriction() const;
         virtual void setFriction( float _friction );
@@ -33,6 +32,9 @@ namespace puma::physics
         //Internal=============================================================================================
         const b2Fixture* getB2Fixture() const { return m_b2Fixture; }
         b2Fixture* getB2Fixture() { return m_b2Fixture; }
+
+        void init( b2Fixture* _fixture, FramePartID _id );
+        void uninit();
 
     private:
 
