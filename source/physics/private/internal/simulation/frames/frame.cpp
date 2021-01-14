@@ -16,9 +16,8 @@
 namespace puma::physics
 {
 
-    Frame::Frame( b2Body* _body, const World* _worldPtr, FrameID _frameId )
-        : m_b2Body( _body )
-        , m_world( _worldPtr )
+    Frame::Frame( const World* _worldPtr, FrameID _frameId )
+        : m_world( _worldPtr )
         , m_frameId( _frameId )
     {
     }
@@ -115,32 +114,78 @@ namespace puma::physics
     
     FramePartID Frame::addBody( const BodyInfo& _bodyInfo )
     {
-        assert( m_frameBodies.size() < kMaxFramePartCount );
+        assert( m_framePartCount < kMaxFramePartCount );
+
+        auto foundIt = std::find_if( m_frameBodies.begin(), m_frameBodies.end(), []( const FrameBody& frameBody ) { return !frameBody.isValid(); } );
 
         b2Fixture* fixture = addBodyFixture( m_b2Body, _bodyInfo, m_world->getCollisionMask( _bodyInfo.collisionIndex ) );
         
-        FramePartID id( IdHelper::buildFrameBodyID( m_frameId.value(), (u32)m_frameBodies.size() ) );
-        m_frameBodies.emplace_back( std::make_unique<FrameBody>( fixture, id ) );
-        m_frameBodies.back()->setUserData( _bodyInfo.userData );
+        FrameBody* newFramePart;
+        if ( foundIt == m_frameBodies.end() )
+        {
+            FramePartID id( IdHelper::buildFrameBodyID( m_frameId.value(), (u32)m_frameBodies.size() ) );
+            m_frameBodies.emplace_back( id );
+            newFramePart = &m_frameBodies.back();
+            
+            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
+            newFramePart->setUserData( _bodyInfo.userData );
+        }
+        else
+        {
+            newFramePart = foundIt._Ptr;
+            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
+        }
+        
+        fixture->GetUserData().pointer = newFramePart->getID().value();
 
-        fixture->GetUserData().pointer = id.value();
-
-        return id;
+        ++m_framePartCount;
+        return newFramePart->getID();
     }
 
     FramePartID Frame::addTrigger( const TriggerInfo& _triggerInfo )
     {
-        assert( m_frameTriggers.size() < kMaxFramePartCount );
+        assert( m_framePartCount < kMaxFramePartCount );
+
+        auto foundIt = std::find_if( m_frameTriggers.begin(), m_frameTriggers.end(), []( const FrameTrigger& frameTrigger ) { return !frameTrigger.isValid(); } );
 
         b2Fixture* fixture = addTriggerFixture( m_b2Body, _triggerInfo, m_world->getCollisionMask( _triggerInfo.collisionIndex ) );
         
-        FramePartID id( IdHelper::buildFrameTriggerID( m_frameId.value(), (u32)m_frameTriggers.size() ) );
-        m_frameTriggers.emplace_back( std::make_unique <FrameTrigger>( fixture, id ) );
-        m_frameTriggers.back()->setUserData( _triggerInfo.userData );
+        FrameTrigger* newFramePart;
+        if ( foundIt == m_frameTriggers.end() )
+        {
+            FramePartID id( IdHelper::buildFrameTriggerID( m_frameId.value(), (u32)m_frameTriggers.size() ) );
+            m_frameTriggers.emplace_back( id );
+            newFramePart = &m_frameTriggers.back();
 
-        fixture->GetUserData().pointer = id.value();
+            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
+            newFramePart->setUserData( _triggerInfo.userData );
+        }
+        else
+        {
+            newFramePart = foundIt._Ptr;
+            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
+        }
 
-        return id;
+        fixture->GetUserData().pointer = newFramePart->getID().value();
+
+        ++m_framePartCount;
+        return newFramePart->getID();
+    }
+
+    void Frame::removeFramePart( const FramePartID& _framePartId )
+    {
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+        FramePartType framePartType = FramePartType::Invalid;
+        PhysicsID framePartIndex = kMaxU32;
+
+        IdHelper::readFramePartID( _framePartId, worldIndex, frameType, frameIndex, framePartType, framePartIndex );
+
+        FramePart* framePart = getInternalFramePart( framePartType, framePartIndex );
+
+        removeFramePart( framePart, framePartType, framePartIndex );
+        --m_framePartCount;
     }
 
     namespace
@@ -249,25 +294,9 @@ namespace puma::physics
         return getFrameTrigger( framePartIndex );
     }
 
-    void Frame::removeFramePart( const FramePartID& _framePartId )
-    {
-        PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Invalid;
-        PhysicsID frameIndex = kMaxU32;
-        FramePartType framePartType = FramePartType::Invalid;
-        PhysicsID framePartIndex = kMaxU32;
-
-        IdHelper::readFramePartID( _framePartId, worldIndex, frameType, frameIndex, framePartType, framePartIndex );
-
-        FramePart* framePart = getInternalFramePart( framePartType, framePartIndex );
-
-        m_b2Body->DestroyFixture( framePart->getB2Fixture() );
-        removeFramePart( framePartType, framePartIndex );
-    }
-
     bool Frame::isValid() const 
     { 
-        return (nullptr != m_b2Body) && (nullptr != m_b2Body->GetWorld()); 
+        return nullptr != m_b2Body; 
     }
 
     bool Frame::isEnabled() const
@@ -291,8 +320,8 @@ namespace puma::physics
 
         switch ( _framePartType )
         {
-        case FramePartType::Body:       framePtr = getFrameBody( _framePartIndex )->getInternalFramePart(); break;
-        case FramePartType::Trigger:    framePtr = getFrameTrigger( _framePartIndex )->getInternalFramePart(); break;
+        case FramePartType::Body:    framePtr = getFrameBody( _framePartIndex )    ? getFrameBody( _framePartIndex )->getInternalFramePart()    : nullptr; break;
+        case FramePartType::Trigger: framePtr = getFrameTrigger( _framePartIndex ) ? getFrameTrigger( _framePartIndex )->getInternalFramePart() : nullptr; break;
         default: assert( false ); break;
         }
 
@@ -305,8 +334,8 @@ namespace puma::physics
 
         switch ( _framePartType )
         {
-        case FramePartType::Body:       framePtr = getFrameBody( _framePartIndex )->getInternalFramePart(); break;
-        case FramePartType::Trigger:    framePtr = getFrameTrigger( _framePartIndex )->getInternalFramePart(); break;
+        case FramePartType::Body:    framePtr = getFrameBody( _framePartIndex )    ? getFrameBody( _framePartIndex )->getInternalFramePart()    : nullptr; break;
+        case FramePartType::Trigger: framePtr = getFrameTrigger( _framePartIndex ) ? getFrameTrigger( _framePartIndex )->getInternalFramePart() : nullptr; break;
         default: assert( false ); break;
         }
 
@@ -341,20 +370,22 @@ namespace puma::physics
         return framePtr;
     }
 
-    void Frame::removeFramePart( FramePartType _framePartType, PhysicsID _framePartIndex )
+    void Frame::removeFramePart( FramePart* _framePart, FramePartType _framePartType, PhysicsID _framePartIndex )
     {
+        m_b2Body->DestroyFixture( _framePart->getB2Fixture() );
+
         switch ( _framePartType )
         {
-        case FramePartType::Body:       
+        case FramePartType::Body:
         {
             assert( _framePartIndex < m_frameBodies.size() );
-            m_frameBodies.erase( m_frameBodies.begin() + _framePartIndex );
+            m_frameBodies[_framePartIndex].getInternalFramePart()->setB2Fixture( nullptr );
             break;
         }
-        case FramePartType::Trigger:    
+        case FramePartType::Trigger:
         {
             assert( _framePartIndex < m_frameTriggers.size() );
-            m_frameTriggers.erase( m_frameTriggers.begin() + _framePartIndex );
+            m_frameTriggers[_framePartIndex].getInternalFramePart()->setB2Fixture( nullptr );
             break;
         }
         default: assert( false ); break;

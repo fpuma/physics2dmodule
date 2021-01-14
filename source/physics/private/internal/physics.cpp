@@ -81,15 +81,16 @@ namespace puma::physics
 
             IdHelper::readFramePartID( _framePartId, worldIndex, frameType, frameIndex, framePartType, framePartIndex );
 
+            const Frame* internalFrame = _worlds[worldIndex]->getInternalFrame( frameType, frameIndex );
             const IFramePart* framePartPtr = nullptr;
 
             switch ( framePartType )
             {
             case FramePartType::Body:
-                framePartPtr = _worlds[worldIndex]->getInternalFrame( frameType, frameIndex )->getFrameBody( framePartIndex ); 
+                framePartPtr = internalFrame ? internalFrame->getFrameBody( framePartIndex ) : nullptr; 
                 break;
             case FramePartType::Trigger:
-                framePartPtr = _worlds[worldIndex]->getInternalFrame( frameType, frameIndex )->getFrameTrigger( framePartIndex );
+                framePartPtr = internalFrame ? internalFrame->getFrameTrigger( framePartIndex ) : nullptr;
                 break;
             default: assert( false ); break;
             }

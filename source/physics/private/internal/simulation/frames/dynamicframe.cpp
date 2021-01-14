@@ -6,8 +6,8 @@
 
 namespace puma::physics
 {
-    DynamicFrame::DynamicFrame( b2Body* _body, const World* _world, FrameID _id )
-        : m_frame( _body, _world, _id )
+    DynamicFrame::DynamicFrame( const World* _world, FrameID _id )
+        : m_frame( _world, _id )
     {}
     
     //Common

@@ -9,8 +9,8 @@
 
 namespace puma::physics
 {
-    FrameTrigger::FrameTrigger( b2Fixture* _fixture, FramePartID _id )
-        : m_framePart (_fixture, _id)
+    FrameTrigger::FrameTrigger( FramePartID _id )
+        : m_framePart( _id )
     {
     }
 

@@ -2,6 +2,8 @@
 #include <gmock/gmock.h>
 
 #include "worldtest.h"
+#include "frametest.h"
+#include "frameparttest.h"
 
 int main( int argc, char* argv[] )
 {

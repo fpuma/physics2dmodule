@@ -96,44 +96,109 @@ namespace puma::physics
 
     const FrameID World::addDynamicFrame( const FrameInfo& _frameInfo )
     {
+        assert( m_frameCount < kMaxFrameCount );
+
+        auto foundIt = std::find_if( m_dynamicFrames.begin(), m_dynamicFrames.end(), []( const DynamicFrame& dynamicFrame ) { return !dynamicFrame.isValid(); } );
+
         b2BodyDef bodyDef;
-
         setBodyDef( bodyDef, b2_dynamicBody, _frameInfo );
-
         b2Body* body = m_b2World.CreateBody( &bodyDef );
-        FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
-        m_dynamicFrames.emplace_back( std::make_unique<DynamicFrame>( body, this, id ) );
-        body->GetUserData().pointer = 0;
 
-        return id;
+        DynamicFrame* newFrame;
+        if ( foundIt == m_dynamicFrames.end() )
+        {
+            FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
+            m_dynamicFrames.emplace_back( this, id );
+            body->GetUserData().pointer = 0;
+            newFrame = &m_dynamicFrames.back();
+
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+        else
+        {
+            newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+
+        ++m_frameCount;
+
+        return newFrame->getID();
     }
 
     const FrameID World::addStaticFrame( const FrameInfo& _frameInfo )
     {
+        assert( m_frameCount < kMaxFrameCount );
+
+        auto foundIt = std::find_if( m_staticFrames.begin(), m_staticFrames.end(), []( const StaticFrame& staticFrame ) { return !staticFrame.isValid(); } );
+
         b2BodyDef bodyDef;
-
         setBodyDef( bodyDef, b2_staticBody, _frameInfo );
-
         b2Body* body = m_b2World.CreateBody( &bodyDef );
-        FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
-        m_staticFrames.emplace_back( std::make_unique<StaticFrame>( body, this, id ) );
-        body->GetUserData().pointer = 0;
 
-        return id;
+        StaticFrame* newFrame;
+        if ( foundIt == m_staticFrames.end() )
+        {
+            FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
+            m_staticFrames.emplace_back( this, id );
+            body->GetUserData().pointer = 0;
+            newFrame = &m_staticFrames.back();
+            
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+        else
+        {
+            newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+
+        ++m_frameCount;
+
+        return newFrame->getID();
     }
 
     const FrameID World::addKinematicFrame( const FrameInfo& _frameInfo )
     {
+        assert( m_frameCount < kMaxFrameCount );
+
+        auto foundIt = std::find_if( m_kinematicFrames.begin(), m_kinematicFrames.end(), []( const KinematicFrame& kinematicFrame ) { return !kinematicFrame.isValid(); } );
+
         b2BodyDef bodyDef;
-
         setBodyDef( bodyDef, b2_kinematicBody, _frameInfo );
-
         b2Body* body = m_b2World.CreateBody( &bodyDef );
-        FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
-        m_kinematicFrames.emplace_back( std::make_unique<KinematicFrame>( body, this, id ) );
-        body->GetUserData().pointer = 0;
 
-        return id;
+        KinematicFrame* newFrame;
+        if ( foundIt == m_kinematicFrames.end() )
+        {
+            FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
+            m_kinematicFrames.emplace_back( this, id );
+            body->GetUserData().pointer = 0;
+            newFrame = &m_kinematicFrames.back();
+
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+        else
+        {
+            newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
+        }
+
+        ++m_frameCount;
+
+        return newFrame->getID();
+    }
+
+    void World::removeFrame( const FrameID& _frameId )
+    {
+        PhysicsID worldIndex = kMaxU32;
+        FrameType frameType = FrameType::Invalid;
+        PhysicsID frameIndex = kMaxU32;
+
+        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
+
+        Frame* framePtr = getInternalFrame( frameType, frameIndex );
+        
+        removeFrame( framePtr, frameType, frameIndex );
+        --m_frameCount;
     }
 
     namespace
@@ -262,20 +327,6 @@ namespace puma::physics
         return getKinematicFrame( frameIndex );
     }
 
-    void World::removeFrame( const FrameID& _frameId )
-    {
-        PhysicsID worldIndex = kMaxU32;
-        FrameType frameType = FrameType::Invalid;
-        PhysicsID frameIndex = kMaxU32;
-
-        IdHelper::readFrameID( _frameId, worldIndex, frameType, frameIndex );
-
-        Frame* framePtr = getInternalFrame( frameType, frameIndex );
-
-        m_b2World.DestroyBody( framePtr->getB2Body() );
-        removeFrame( frameType, frameIndex );
-    }
-
     void World::setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility )
     {
         for ( const CollisionRelation& collisionRelation : _collisionCompatibility )
@@ -319,9 +370,9 @@ namespace puma::physics
 
         switch ( _frameType )
         {
-        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )->getInternalFrame(); break;
-        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )->getInternalFrame(); break;
-        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )   ? getDynamicFrame( _frameIndex )->getInternalFrame()   : nullptr; break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )    ? getStaticFrame( _frameIndex )->getInternalFrame()    : nullptr; break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex ) ? getKinematicFrame( _frameIndex )->getInternalFrame() : nullptr; break;
         default: assert( false ); break;
         }
 
@@ -334,9 +385,9 @@ namespace puma::physics
 
         switch ( _frameType )
         {
-        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )->getInternalFrame(); break;
-        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )->getInternalFrame(); break;
-        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex )->getInternalFrame(); break;
+        case FrameType::Dynamic:    framePtr = getDynamicFrame( _frameIndex )   ? getDynamicFrame( _frameIndex )->getInternalFrame()   : nullptr; break;
+        case FrameType::Static:     framePtr = getStaticFrame( _frameIndex )    ? getStaticFrame( _frameIndex )->getInternalFrame()    : nullptr; break;
+        case FrameType::Kinematic:  framePtr = getKinematicFrame( _frameIndex ) ? getKinematicFrame( _frameIndex )->getInternalFrame() : nullptr; break;
         default: assert( false ); break;
         }
 
@@ -373,26 +424,28 @@ namespace puma::physics
         return framePtr;
     }
 
-    void World::removeFrame( FrameType _frameType, u32 _frameIndex )
+    void World::removeFrame( Frame* _frame, FrameType _frameType, u32 _frameIndex )
     {
+        m_b2World.DestroyBody( _frame->getB2Body() );
+
         switch ( _frameType )
         {
         case FrameType::Dynamic:    
         {
             assert( _frameIndex < m_dynamicFrames.size() );
-            m_dynamicFrames.erase( m_dynamicFrames.begin() + _frameIndex );
+            m_dynamicFrames[_frameIndex].getInternalFrame()->setB2Body(nullptr);
             break;
         }
         case FrameType::Static:  
         {
             assert( _frameIndex < m_staticFrames.size() );
-            m_staticFrames.erase( m_staticFrames.begin() + _frameIndex );
+            m_staticFrames[_frameIndex].getInternalFrame()->setB2Body( nullptr );
             break;
         }
         case FrameType::Kinematic:  
         {
             assert( _frameIndex < m_kinematicFrames.size() );
-            m_kinematicFrames.erase( m_kinematicFrames.begin() + _frameIndex );
+            m_kinematicFrames[_frameIndex].getInternalFrame()->setB2Body( nullptr );
             break;
         }
         default: assert( false ); break;
