@@ -18,10 +18,6 @@ namespace puma::physics
 {
     struct FrameInfo;
 
-    //using DynamicFramePtr = std::unique_ptr<DynamicFrame>;
-    //using StaticFramePtr = std::unique_ptr<StaticFrame>;
-    //using KinematicFramePtr = std::unique_ptr<KinematicFrame>;
-
     class World : public IWorld, public NonCopyable
     {
     public:

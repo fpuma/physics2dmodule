@@ -110,14 +110,14 @@ namespace puma::physics
             FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
             m_dynamicFrames.emplace_back( this, id );
             body->GetUserData().pointer = 0;
-
-            m_dynamicFrames.back().getInternalFrame()->setB2Body( body );
             newFrame = &m_dynamicFrames.back();
+
+            newFrame->getInternalFrame()->setB2Body( body );
         }
         else
         {
-            foundIt->getInternalFrame()->setB2Body( body );
             newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
         }
 
         ++m_frameCount;
@@ -141,14 +141,14 @@ namespace puma::physics
             FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
             m_staticFrames.emplace_back( this, id );
             body->GetUserData().pointer = 0;
-            
-            m_staticFrames.back().getInternalFrame()->setB2Body( body );
             newFrame = &m_staticFrames.back();
+            
+            newFrame->getInternalFrame()->setB2Body( body );
         }
         else
         {
-            foundIt->getInternalFrame()->setB2Body( body );
             newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
         }
 
         ++m_frameCount;
@@ -172,14 +172,14 @@ namespace puma::physics
             FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
             m_kinematicFrames.emplace_back( this, id );
             body->GetUserData().pointer = 0;
-
-            m_kinematicFrames.back().getInternalFrame()->setB2Body( body );
             newFrame = &m_kinematicFrames.back();
+
+            newFrame->getInternalFrame()->setB2Body( body );
         }
         else
         {
-            foundIt->getInternalFrame()->setB2Body( body );
             newFrame = foundIt._Ptr;
+            newFrame->getInternalFrame()->setB2Body( body );
         }
 
         ++m_frameCount;

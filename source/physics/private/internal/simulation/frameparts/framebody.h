@@ -13,7 +13,8 @@ namespace puma::physics
     {
     public:
 
-        FrameBody();
+        FrameBody() = delete;
+        FrameBody( FramePartID _id );
         FrameBody( FrameBody&& _other ) noexcept : m_framePart( std::move( _other.m_framePart ) ) {}
         float getFriction() const override;
         void setFriction( float _friction ) override;

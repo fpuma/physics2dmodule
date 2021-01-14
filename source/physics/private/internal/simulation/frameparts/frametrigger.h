@@ -13,7 +13,8 @@ namespace puma::physics
     {
     public:
 
-        FrameTrigger();
+        FrameTrigger() = delete;
+        FrameTrigger( FramePartID _id );
         FrameTrigger( FrameTrigger&& _other ) noexcept : m_framePart( std::move( _other.m_framePart ) ) {}
 
         float getDensity() const override;

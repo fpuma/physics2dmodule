@@ -9,7 +9,8 @@
 
 namespace puma::physics
 {
-    FrameBody::FrameBody()
+    FrameBody::FrameBody( FramePartID _id )
+        : m_framePart( _id )
     {
     }
 

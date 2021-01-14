@@ -9,7 +9,8 @@
 
 namespace puma::physics
 {
-    FramePart::FramePart()
+    FramePart::FramePart( FramePartID _id )
+        : m_framePartId( _id )
     {
     }
 
@@ -64,18 +65,5 @@ namespace puma::physics
     bool FramePart::isValid() const
     { 
         return nullptr != m_b2Fixture;
-    }
-
-    void FramePart::init( b2Fixture* _fixture, FramePartID _id )
-    {
-        assert( !isValid() );
-        m_b2Fixture = _fixture;
-        m_framePartId = _id;
-    }
-
-    void FramePart::uninit()
-    {
-        m_b2Fixture = nullptr;
-        m_framePartId.invalidate();
     }
 }
