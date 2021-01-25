@@ -3,7 +3,7 @@
 namespace puma::physics
 {
     using CollisionIndex = u32;
-    const CollisionIndex kDefaultCollisionID = 0;
+    constexpr CollisionIndex kDefaultCollisionID = 0;
     constexpr u32 kMaxCollisionCateogries = 16;
     using CollisionRelation = std::pair<CollisionIndex, CollisionIndex>;
     using CollisionCompatibility = std::vector<CollisionRelation>;
