@@ -6,7 +6,6 @@ namespace puma::physics
     struct BodyInfo
     {
         Shape shape;
-        ShapeType shapeType;
         CollisionIndex collisionIndex = kDefaultCollisionID;
         float density = 0.0f;
         float friction = 0.2f;

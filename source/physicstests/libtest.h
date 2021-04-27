@@ -136,8 +136,7 @@ public:
         //Dynamics
         {
             puma::physics::BodyInfo circleBodyInfo;
-            circleBodyInfo.shapeType = ShapeType::Circle;
-            circleBodyInfo.shape.circle = { {}, 25.0f };
+            circleBodyInfo.shape.setAsCircle( { {}, 25.0f } );
             circleBodyInfo.density = 0.5f;
 
             frameInfo.position = { 50.0f , 50.0f };
@@ -161,8 +160,7 @@ public:
         //trigger
         {
             puma::physics::TriggerInfo circleTriggerInfo;
-            circleTriggerInfo.shapeType = ShapeType::Circle;
-            circleTriggerInfo.shape.circle = { {}, 25.0f };
+            circleTriggerInfo.shape.setAsCircle( { {}, 25.0f } );
 
             frameInfo.position = { 250.0f , 50.0f };
             FrameID dynamicId2 = worldPtr->addDynamicFrame( frameInfo );
@@ -175,8 +173,7 @@ public:
         //Statics
         {
             puma::physics::BodyInfo rectangleBodyInfo;
-            rectangleBodyInfo.shapeType = ShapeType::Rectangle;
-            rectangleBodyInfo.shape.rectangle = { { 130.0f, 15.0f }, { -130.0f, -15.0f } };
+            rectangleBodyInfo.shape.setAsRectangle( { { 130.0f, 15.0f }, { -130.0f, -15.0f } } );
 
             frameInfo.position = { 150.0f , 200.0f };
             FrameID staticId0 = worldPtr->addStaticFrame( frameInfo );

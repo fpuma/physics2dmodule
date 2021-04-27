@@ -41,17 +41,17 @@ namespace puma::physics
     b2Shape* getShapeFromInfo( const Info& _info, Box2DShapes& _b2Shape )
     {
         b2Shape* result = nullptr;
-        switch ( _info.shapeType )
+        switch ( _info.shape.getShapeType())
         {
         case ShapeType::Circle:     
         {
-            _b2Shape.circle = toBox2DShape( _info.shape.circle ); 
+            _b2Shape.circle = toBox2DShape( _info.shape.getAsCircle() ); 
             result = &_b2Shape.circle;
             break; 
         }
         case ShapeType::Rectangle:  
         {
-            _b2Shape.polygon = toBox2DShape( _info.shape.rectangle );
+            _b2Shape.polygon = toBox2DShape( _info.shape.getAsRectangle() );
             result = &_b2Shape.polygon;
             break;
         }
