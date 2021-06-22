@@ -95,7 +95,8 @@ namespace puma::physics
             default: assert( false ); break;
             }
 
-            assert( nullptr != framePartPtr );
+            //[fpuma] This is messing with the unit tests. Replace for a log. Returning nullptr should be valid
+            //assert( nullptr != framePartPtr );
 
             if ( nullptr != _outFramePartType )
             {

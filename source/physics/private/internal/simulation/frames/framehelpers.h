@@ -57,6 +57,7 @@ namespace puma::physics
         }
         default:
         {
+            //This shape is not supported yet
             assert( false );
             break;
         }
