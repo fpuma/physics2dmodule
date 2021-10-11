@@ -173,7 +173,7 @@ public:
         //Statics
         {
             puma::physics::BodyInfo rectangleBodyInfo;
-            rectangleBodyInfo.shape.setAsRectangle( { { 130.0f, 15.0f }, { -130.0f, -15.0f } } );
+            rectangleBodyInfo.shape.setAsPolygon( { { 130.0f, 15.0f }, { -130.0f, -15.0f } } );
 
             frameInfo.position = { 150.0f , 200.0f };
             FrameID staticId0 = worldPtr->addStaticFrame( frameInfo );

@@ -23,16 +23,18 @@ namespace puma::physics
         return b2Circle;
     }
 
-    b2PolygonShape toBox2DShape( const Rectangle& _shape )
+    b2PolygonShape toBox2DShape( const Polygon& _shape )
     {
         b2PolygonShape b2Polygon;
-        b2Vec2 vertices[4];
-        vertices[0] = { _shape.lowerBoundary.x, _shape.lowerBoundary.y };
-        vertices[1] = { _shape.upperBoundary.x, _shape.lowerBoundary.y };
-        vertices[2] = { _shape.upperBoundary.x, _shape.upperBoundary.y };
-        vertices[3] = { _shape.lowerBoundary.x, _shape.upperBoundary.y };
 
-        b2Polygon.Set( vertices, 4 );
+        std::vector<b2Vec2> b2Vectors;
+
+        std::transform( _shape.vertices.begin(), _shape.vertices.end(), std::back_inserter( b2Vectors ), [&]( const Vec2& vec2 )
+        {
+            return b2Vec2( vec2.x, vec2.y );
+        } );
+
+        b2Polygon.Set( b2Vectors.data(), (s32)b2Vectors.size() );
 
         return b2Polygon;
     }
@@ -49,16 +51,15 @@ namespace puma::physics
             result = &_b2Shape.circle;
             break; 
         }
-        case ShapeType::Rectangle:  
+        case ShapeType::Polygon:  
         {
-            _b2Shape.polygon = toBox2DShape( _info.shape.getAsRectangle() );
+            _b2Shape.polygon = toBox2DShape( _info.shape.getAsPolygon() );
             result = &_b2Shape.polygon;
             break;
         }
         default:
         {
-            //This shape is not supported yet
-            assert( false );
+            assert( false ); //This shape is not supported yet
             break;
         }
         }

@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <assert.h>
+#include <iterator>
 #include <memory>
 #include <vector>
 #include <functional>
