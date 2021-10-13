@@ -17,10 +17,10 @@ namespace puma::physics
     public:
         virtual ~DebugDraw() {}
 
-        virtual void renderPolygon( const std::vector<Vec2>&& _vertices, const RGBA& _color ) = 0;
-        virtual void renderSolidPolygon( const std::vector<Vec2>&& _vertices, const RGBA& _color ) = 0;
-        virtual void renderCircle( const Vec2&& _center, float _radius, const RGBA& _color ) = 0;
-        virtual void renderSolidCircle( const Vec2&& _center, float _radius, const RGBA& _color ) = 0;
-        virtual void renderSegment( const Vec2&& _point1, const Vec2& _point2, const RGBA& _color ) = 0;
+        virtual void renderPolygon( const std::vector<Vec2>&& _vertices, const RGBA&& _color ) = 0;
+        virtual void renderSolidPolygon( const std::vector<Vec2>&& _vertices, const RGBA&& _color ) = 0;
+        virtual void renderCircle( const Vec2&& _center, float _radius, const RGBA&& _color ) = 0;
+        virtual void renderSolidCircle( const Vec2&& _center, float _radius, const RGBA&& _color ) = 0;
+        virtual void renderSegment( const Vec2&& _point1, const Vec2&& _point2, const RGBA&& _color ) = 0;
     };
 }

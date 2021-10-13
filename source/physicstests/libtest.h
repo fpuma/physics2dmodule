@@ -38,7 +38,7 @@ class MyDebugDraw : public puma::physics::DebugDraw
 {
 public:
 
-    void renderPolygon( const std::vector<Vec2>&& _vertices, const RGBA& _color ) override
+    void renderPolygon( const std::vector<Vec2>&& _vertices, const RGBA&& _color ) override
     {
         std::vector<short> xCoords( _vertices.size() );
         std::vector<short> yCoords( _vertices.size() );
@@ -56,7 +56,7 @@ public:
         graphics->getDefaultRenderer()->renderPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
     }
 
-    void renderSolidPolygon( const std::vector<Vec2>&& _vertices, const RGBA& _color ) override
+    void renderSolidPolygon( const std::vector<Vec2>&& _vertices, const RGBA&& _color ) override
     {
         std::vector<short> xCoords( _vertices.size() );
         std::vector<short> yCoords( _vertices.size() );
@@ -74,17 +74,17 @@ public:
         graphics->getDefaultRenderer()->renderSolidPolygon( xCoords.data(), yCoords.data(), (int)_vertices.size(), colorTransform( _color ) );
     }
 
-    void renderCircle( const Vec2&& _center, float _radius, const RGBA& _color ) override
+    void renderCircle( const Vec2&& _center, float _radius, const RGBA&& _color ) override
     {
         graphics->getDefaultRenderer()->renderCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
     }
 
-    void renderSolidCircle( const Vec2&& _center, float _radius, const RGBA& _color ) override
+    void renderSolidCircle( const Vec2&& _center, float _radius, const RGBA&& _color ) override
     {
         graphics->getDefaultRenderer()->renderSolidCircle( (int)_center.x, (int)_center.y, (int)_radius, colorTransform( _color ) );
     }
 
-    void renderSegment( const Vec2&& _point1, const Vec2& _point2, const RGBA& _color ) override
+    void renderSegment( const Vec2&& _point1, const Vec2&& _point2, const RGBA&& _color ) override
     {
         graphics->getDefaultRenderer()->renderSegment( (int)_point1.x, (int)_point1.y, (int)_point2.x, (int)_point2.y, colorTransform( _color ) );
     }
