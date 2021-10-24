@@ -2,6 +2,7 @@
 
 #include "frame.h"
 
+#include <utils/geometry/geometryhelpers.h>
 #include <utils/geometry/shapes/shape.h>
 
 #include <internal/ids/idhelper.h>
@@ -49,7 +50,7 @@ namespace puma::physics
 
     float Frame::getAngle() const
     {
-        return TO_DEGREES( m_b2Body->GetAngle() );
+        return GeometryHelpers::radiansToDegrees( m_b2Body->GetAngle() );
     }
 
     void Frame::setAngle( float _angle )

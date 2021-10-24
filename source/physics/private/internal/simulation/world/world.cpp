@@ -10,6 +10,8 @@
 #include <internal/simulation/frames/staticframe.h>
 #include <internal/simulation/frames/kinematicframe.h>
 
+#include <utils/geometry/geometryhelpers.h>
+
 #include <box2d/b2_body.h>
 #include <box2d/b2_contact.h>
 #include <box2d/b2_draw.h>
@@ -23,7 +25,7 @@ namespace puma::physics
         {
             _bodyDef.type = _bodyType;
             _bodyDef.position = { _frameInfo.position.x, _frameInfo.position.y };
-            _bodyDef.angle = TO_RADIANS( _frameInfo.angle);
+            _bodyDef.angle = GeometryHelpers::degreesToRadians( _frameInfo.angle);
             _bodyDef.linearVelocity = { _frameInfo.linearVelocity.x, _frameInfo.linearVelocity.y };
             _bodyDef.angularVelocity = _frameInfo.angularVelocity;
             _bodyDef.linearDamping = _frameInfo.linearDamping;
