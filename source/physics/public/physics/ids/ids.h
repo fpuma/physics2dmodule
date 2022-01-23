@@ -7,31 +7,7 @@ namespace puma::physics
     const u32 kInvalidPhysicsID = kMaxU32;
     using PhysicsID = u32;
     
-    class WorldID : public GenericID<PhysicsID, kInvalidPhysicsID> 
-    {
-    public:
-        WorldID() {}
-        WorldID( PhysicsID _id )
-            : GenericID( _id )
-        {}
-    };
-    
-    class FrameID : public GenericID<PhysicsID, kInvalidPhysicsID> 
-    {
-    public:
-        FrameID() {}
-        FrameID( PhysicsID _id )
-            : GenericID( _id )
-        {}
-    };
-    
-    class FramePartID : public GenericID<PhysicsID, kInvalidPhysicsID> 
-    {
-    public:
-        FramePartID() {}
-        FramePartID( PhysicsID _id )
-            : GenericID( _id )
-        {}
-    };
-    
+    DECLARE_GENERIC_ID( WorldID, PhysicsID, kInvalidPhysicsID)
+    DECLARE_GENERIC_ID( FrameID, PhysicsID, kInvalidPhysicsID )
+    DECLARE_GENERIC_ID( FramePartID, PhysicsID, kInvalidPhysicsID )
 }

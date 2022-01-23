@@ -38,15 +38,15 @@ namespace puma::physics
 
         void removeFrame( const FrameID& _frameId ) override;
 
-        IFrame* getFrame( const FrameID& _frameId );
-        DynamicFrame* getDynamicFrame( const FrameID& _frameId );
-        StaticFrame* getStaticFrame( const FrameID& _frameId );
-        KinematicFrame* getKinematicFrame( const FrameID& _frameId );
+        IFrame* getFrame( const FrameID& _frameId ) override;
+        DynamicFrame* getDynamicFrame( const FrameID& _frameId ) override;
+        StaticFrame* getStaticFrame( const FrameID& _frameId ) override;
+        KinematicFrame* getKinematicFrame( const FrameID& _frameId ) override;
 
-        const IFrame* getFrame( const FrameID& _frameId ) const;
-        const DynamicFrame* getDynamicFrame( const FrameID& _frameId ) const;
-        const StaticFrame* getStaticFrame( const FrameID& _frameId ) const;
-        const KinematicFrame* getKinematicFrame( const FrameID& _frameId ) const;
+        const IFrame* getFrame( const FrameID& _frameId ) const override;
+        const DynamicFrame* getDynamicFrame( const FrameID& _frameId ) const override;
+        const StaticFrame* getStaticFrame( const FrameID& _frameId ) const override;
+        const KinematicFrame* getKinematicFrame( const FrameID& _frameId ) const override;
 
         void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) override;
         CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const override;
