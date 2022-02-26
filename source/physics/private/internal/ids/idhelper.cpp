@@ -105,6 +105,7 @@ namespace puma::physics
             appendWorldIndex( _worldId, _worldIndex, cursor );
             break;
         default:
+            assert( false ); //SerializeMode not yet supported
             break;
         }
     }
@@ -126,6 +127,7 @@ namespace puma::physics
             appendWorldIndex( _frameId, _worldIndex, cursor );
             break;
         default:
+            assert( false ); //SerializeMode not yet supported
             break;
         }
     }
@@ -151,6 +153,7 @@ namespace puma::physics
             appendWorldIndex( _frameId, _worldIndex, cursor );
             break;
         default:
+            assert( false ); //SerializeMode not yet supported
             break;
         }
     }
