@@ -16,6 +16,7 @@ namespace Puma
 
             conf.IncludePrivatePaths.Add(@"\private");
             conf.IncludePaths.Add(@"\public");
+            conf.IncludePaths.Add(@"\shared");
 
             conf.PrecompHeader = @"precompiledphysics.h";
             conf.PrecompSource = @"precompiledphysics.cpp";
