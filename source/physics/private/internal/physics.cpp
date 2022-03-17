@@ -34,12 +34,12 @@ namespace puma::physics
         if ( foundIt != m_worlds.end() )
         {
             s64 worldIndex = std::distance( m_worlds.begin(), foundIt );
-            newWorldId = (PhysicsID)worldIndex;
+            newWorldId = WorldID(static_cast<PhysicsID>(worldIndex));
             m_worlds[worldIndex] = std::make_unique<World>( _gravity, newWorldId );
         }
         else
         {
-            newWorldId = (PhysicsID)m_worlds.size();
+            newWorldId = WorldID( static_cast<PhysicsID>(m_worlds.size()) );
             m_worlds.emplace_back( std::make_unique<World>( _gravity, newWorldId ) );
         }
 
