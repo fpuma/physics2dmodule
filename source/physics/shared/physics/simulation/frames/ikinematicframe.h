@@ -2,7 +2,7 @@
 #include <utils/geometry/vec2.h>
 #include <physics/simulation/frames/iframe.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     class IKinematicFrame : public IFrame
     {

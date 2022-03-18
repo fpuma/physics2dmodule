@@ -3,7 +3,7 @@
 #include "idhelper.h"
 #include <internal/ids/ids.h>
 
-namespace puma::physics
+namespace puma::leo
 {
 
     const WorldID IdHelper::buildWorldID( PhysicsID _worldIndex )

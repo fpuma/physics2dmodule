@@ -1,6 +1,6 @@
 #pragma once
 
-namespace puma::physics
+namespace puma::leo
 {
     //The sum of these should not exceed 32
     constexpr u8 kWorldIdBitCount = 2;

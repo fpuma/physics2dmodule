@@ -11,7 +11,7 @@
 
 #include <box2d/b2_world.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     struct FrameInfo;
 

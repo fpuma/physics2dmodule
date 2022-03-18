@@ -2,7 +2,7 @@
 #include <utils/geometry/vec2.h>
 #include <utils/geometry/shapes/shape.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     struct FrameInfo
     {

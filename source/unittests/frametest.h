@@ -9,7 +9,7 @@
 #include <physics/simulation/frames/frameinfo.h>
 #include <physics/simulation/frames/iframe.h>
 
-using namespace puma::physics;
+using namespace puma::leo;
 
 TEST( FrameManagement, AddingRemovingFrames )
 {

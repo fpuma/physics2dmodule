@@ -4,7 +4,7 @@
 
 #include <box2d/b2_draw.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     class InternalDebugDraw : public b2Draw, public NonCopyable
     {
@@ -21,6 +21,6 @@ namespace puma::physics
         void DrawTransform( const b2Transform& xf ) override;
         void DrawPoint( const b2Vec2& p, float size, const b2Color& color ) override;
 
-        std::unique_ptr<puma::physics::DebugDraw> debugDraw = nullptr;
+        std::unique_ptr<puma::leo::DebugDraw> debugDraw = nullptr;
     };
 }

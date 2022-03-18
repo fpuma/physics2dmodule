@@ -3,7 +3,7 @@
 #include <physics/simulation/frameparts/triggerinfo.h>
 #include <utils/geometry/vec2.h>
 
-namespace puma::physics
+namespace puma::leo
 {
 
     class IFrame

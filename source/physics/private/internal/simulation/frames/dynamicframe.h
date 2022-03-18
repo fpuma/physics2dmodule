@@ -4,7 +4,7 @@
 
 class b2Body;
 
-namespace puma::physics
+namespace puma::leo
 {
     class World;
 

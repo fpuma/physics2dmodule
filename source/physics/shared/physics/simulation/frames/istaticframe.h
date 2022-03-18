@@ -1,7 +1,7 @@
 #pragma once
 #include <physics/simulation/frames/iframe.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     class IStaticFrame : public IFrame
     {

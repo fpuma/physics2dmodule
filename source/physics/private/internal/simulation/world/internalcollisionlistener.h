@@ -4,7 +4,7 @@
 
 class b2Contact;
 
-namespace puma::physics
+namespace puma::leo
 {
     class ICollisionListener;
 

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace puma::physics
+namespace puma::leo
 {
     using CollisionIndex = u32;
     constexpr CollisionIndex kDefaultCollisionID = 0;

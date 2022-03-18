@@ -7,7 +7,7 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_fixture.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     FrameTrigger::FrameTrigger( FramePartID _id )
         : m_framePart( _id )

@@ -18,10 +18,10 @@
 #include <iostream>
 
 using namespace puma;
-using namespace puma::physics;
+using namespace puma::leo;
 
 using Vec2 = puma::Vec2;
-using RGBA = puma::physics::RGBA;
+//using RGBA = puma::leo::RGBA;
 
 puma::app::Color colorTransform( const RGBA& color )
 {
@@ -34,7 +34,7 @@ void printIdBinary( const char* _name, PhysicsID _id )
     std::cout << _name << ": " << bs << std::endl;
 }
 
-class MyDebugDraw : public puma::physics::DebugDraw
+class MyDebugDraw : public puma::leo::DebugDraw
 {
 public:
 
@@ -113,7 +113,7 @@ class LibTest
 public:
 
     LibTest()
-        : m_physics( puma::physics::IPhysics::create() ) {}
+        : m_physics( puma::leo::IPhysics::create() ) {}
 
     void init( puma::app::IApplication* _graphics )
     {
@@ -124,18 +124,18 @@ public:
         std::unique_ptr<MyCollisionListener> collisionListener = std::make_unique<MyCollisionListener>();
         collisionListener->m_physics = m_physics.get();
 
-        puma::physics::IWorld* worldPtr = m_physics->getWorld(m_worldId);
+        puma::leo::IWorld* worldPtr = m_physics->getWorld(m_worldId);
         worldPtr->setDebugDraw( std::move( dbgDraw ) );
         worldPtr->setCollisionListener( std::move( collisionListener ) );
         worldPtr->setGravity( { 0.0f, 10.0f } );
         worldPtr->setCollisionCompatibility( { {1,1}, {2,2}, {1,3}, {2,3}, {3,3} } );
         //========================================================================
 
-        puma::physics::FrameInfo frameInfo;
+        puma::leo::FrameInfo frameInfo;
 
         //Dynamics
         {
-            puma::physics::BodyInfo circleBodyInfo;
+            puma::leo::BodyInfo circleBodyInfo;
             circleBodyInfo.shape.setAsCircle( { {}, 25.0f } );
             circleBodyInfo.density = 0.5f;
 
@@ -159,7 +159,7 @@ public:
 
         //trigger
         {
-            puma::physics::TriggerInfo circleTriggerInfo;
+            puma::leo::TriggerInfo circleTriggerInfo;
             circleTriggerInfo.shape.setAsCircle( { {}, 25.0f } );
 
             frameInfo.position = { 250.0f , 50.0f };
@@ -172,7 +172,7 @@ public:
 
         //Statics
         {
-            puma::physics::BodyInfo rectangleBodyInfo;
+            puma::leo::BodyInfo rectangleBodyInfo;
             rectangleBodyInfo.shape.setAsPolygon( { { 130.0f, 15.0f }, { -130.0f, -15.0f } } );
 
             frameInfo.position = { 150.0f , 200.0f };

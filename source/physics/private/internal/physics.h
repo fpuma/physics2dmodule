@@ -5,7 +5,7 @@
 #include <internal/simulation/frameparts/framebody.h>
 #include <internal/simulation/frameparts/frametrigger.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     using WorldPtr = std::unique_ptr<World>;
 

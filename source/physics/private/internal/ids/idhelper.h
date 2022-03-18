@@ -1,7 +1,7 @@
 #pragma once
 #include <internal/ids/ids.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     class IdHelper
     {

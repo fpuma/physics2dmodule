@@ -2,7 +2,7 @@
 
 #include "internaldebugdraw.h"
 
-namespace puma::physics
+namespace puma::leo
 {
 
     InternalDebugDraw::InternalDebugDraw( InternalDebugDraw&& _other ) noexcept

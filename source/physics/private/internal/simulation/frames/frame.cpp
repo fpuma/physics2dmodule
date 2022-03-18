@@ -14,7 +14,7 @@
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_polygon_shape.h>
 
-namespace puma::physics
+namespace puma::leo
 {
 
     Frame::Frame( const World* _worldPtr, FrameID _frameId )

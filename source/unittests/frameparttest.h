@@ -10,7 +10,7 @@
 #include <physics/simulation/frames/iframe.h>
 #include <physics/simulation/frameparts/iframepart.h>
 
-using namespace puma::physics;
+using namespace puma::leo;
 
 TEST( FramePartManagement, AddingRemovingFrameParts )
 {

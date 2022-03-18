@@ -1,6 +1,6 @@
 #pragma once
 
-namespace puma::physics
+namespace puma::leo
 {
     class IWorld;
     

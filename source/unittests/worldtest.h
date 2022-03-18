@@ -6,7 +6,7 @@
 #include <physics/simulation/world/iworld.h>
 #include <physics/ids/ids.h>
 
-using namespace puma::physics;
+using namespace puma::leo;
 
 TEST( WorldManagement, WorldCountCap )
 {

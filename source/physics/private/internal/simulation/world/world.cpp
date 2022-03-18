@@ -17,7 +17,7 @@
 #include <box2d/b2_draw.h>
 #include <box2d/b2_world.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     namespace
     {

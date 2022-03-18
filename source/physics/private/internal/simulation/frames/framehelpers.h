@@ -5,7 +5,7 @@
 #include <box2d/b2_circle_shape.h>
 #include <box2d/b2_polygon_shape.h>
 
-namespace puma::physics
+namespace puma::leo
 {
 
     struct Box2DShapes

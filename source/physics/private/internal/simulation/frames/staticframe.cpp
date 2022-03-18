@@ -4,7 +4,7 @@
 
 #include <box2d/b2_body.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     StaticFrame::StaticFrame( const World* _world, FrameID _id )
         : m_frame( _world, _id )

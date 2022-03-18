@@ -4,7 +4,7 @@
 
 class b2Fixture;
 
-namespace puma::physics
+namespace puma::leo
 {
 
     class FramePart : public NonCopyable

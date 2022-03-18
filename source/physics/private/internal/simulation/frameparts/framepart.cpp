@@ -7,7 +7,7 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_fixture.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     FramePart::FramePart( FramePartID _id )
         : m_framePartId( _id )

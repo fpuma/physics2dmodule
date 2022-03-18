@@ -2,7 +2,7 @@
 
 #include <physics/simulation/frameparts/iframepart.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     class IFrameBody : public IFramePart
     {

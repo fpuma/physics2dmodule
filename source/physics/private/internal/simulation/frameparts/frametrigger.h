@@ -6,7 +6,7 @@
 
 class b2Fixture;
 
-namespace puma::physics
+namespace puma::leo
 {
 
     class FrameTrigger : public IFrameTrigger, public NonCopyable

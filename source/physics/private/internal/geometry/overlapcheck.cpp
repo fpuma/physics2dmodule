@@ -6,7 +6,7 @@
 
 #include <box2d/b2_collision.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     template<>
     bool areShapesOverLapping( Rectangle _rect1, Rectangle _rect2 )

@@ -2,7 +2,7 @@
 #include <physics/debug/debugdraw.h>
 #include <utils/geometry/vec2.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     struct FrameInfo;
     class ICollisionListener;

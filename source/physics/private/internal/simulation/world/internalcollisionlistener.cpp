@@ -6,7 +6,7 @@
 
 #include <box2d/b2_contact.h>
 
-namespace puma::physics
+namespace puma::leo
 {
 
     InternalCollisionListener::InternalCollisionListener( InternalCollisionListener&& _other ) noexcept

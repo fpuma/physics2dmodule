@@ -1,7 +1,7 @@
 #pragma once
 #include <utils/geometry/shapes/shape.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     struct TriggerInfo
     {

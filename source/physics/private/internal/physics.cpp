@@ -8,7 +8,7 @@
 
 #include <utils/geometry/vec2.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     std::unique_ptr<IPhysics> IPhysics::create()
     {

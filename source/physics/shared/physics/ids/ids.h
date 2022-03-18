@@ -2,7 +2,7 @@
 
 #include <utils/genericid.h>
 
-namespace puma::physics
+namespace puma::leo
 {
     const u32 kInvalidPhysicsID = kMaxU32;
     using PhysicsID = u32;
