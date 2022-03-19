@@ -11,7 +11,7 @@ namespace Puma
         {
             base.ConfigureAll(conf, target);
 
-            conf.AddPublicDependency<Puma.Physics>(target);
+            conf.AddPublicDependency<Puma.Leo>(target);
             conf.AddPublicDependency<Puma.GoogleTest>(target);
 
             conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);

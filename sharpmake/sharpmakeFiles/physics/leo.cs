@@ -1,10 +1,10 @@
 namespace Puma
 {
     [Sharpmake.Generate]
-    class Physics : Puma.Common.IMyLib
+    class Leo : Puma.Common.IMyLib
     {
-        public Physics()
-            : base("Physics", @"physics")
+        public Leo()
+            : base("Leo", @"leo")
         { }
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
