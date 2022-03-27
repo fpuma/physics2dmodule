@@ -1,2 +1,2 @@
-# SharpmakeTemplate
-Template with a sharpmake setup to create visual studio solutions based on the source files and libraries to be used
+# Leo
+Leo is a 2D physics framework. Using Box2D under the hood.
