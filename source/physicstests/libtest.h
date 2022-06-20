@@ -3,13 +3,13 @@
 #include <graphics/iapplication.h>
 #include <graphics/commondefinitions.h>
 
-#include <physics/iphysics.h>
-#include <physics/collisions/collisionlistener.h>
-#include <physics/simulation/world/iworld.h>
-#include <physics/simulation/frames/idynamicframe.h>
-#include <physics/simulation/frames/istaticframe.h>
-#include <physics/simulation/frames/frameinfo.h>
-#include <physics/simulation/frameparts/iframepart.h>
+#include <leo/iphysics.h>
+#include <leo/collisions/collisionlistener.h>
+#include <leo/simulation/world/iworld.h>
+#include <leo/simulation/frames/idynamicframe.h>
+#include <leo/simulation/frames/istaticframe.h>
+#include <leo/simulation/frames/frameinfo.h>
+#include <leo/simulation/frameparts/iframepart.h>
 
 #include <utils/geometry/shapes/shape.h>
 #include <utils/geometry/vec2.h>

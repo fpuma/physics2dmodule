@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/simulation/frames/iframe.h>
+#include <leo/simulation/frames/iframe.h>
 
 namespace puma::leo
 {

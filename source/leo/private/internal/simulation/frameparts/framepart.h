@@ -1,6 +1,6 @@
 #pragma once
 #include <utils/geometry/vec2.h>
-#include <physics/simulation/frameparts/iframepart.h>
+#include <leo/simulation/frameparts/iframepart.h>
 
 class b2Fixture;
 

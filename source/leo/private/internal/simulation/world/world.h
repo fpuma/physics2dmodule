@@ -1,7 +1,7 @@
 #pragma once
-#include <physics/collisions/collisionlistener.h>
+#include <leo/collisions/collisionlistener.h>
 #include <utils/geometry/vec2.h>
-#include <physics/simulation/world/iworld.h>
+#include <leo/simulation/world/iworld.h>
 
 #include <internal/simulation/frames/dynamicframe.h>
 #include <internal/simulation/frames/kinematicframe.h>

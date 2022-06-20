@@ -3,10 +3,10 @@ using System.IO;
 namespace Puma
 {
     [Sharpmake.Generate]
-    public class PhysicsSolution : Puma.Common.IMySolution
+    public class LeoSolution : Puma.Common.IMySolution
     {
-        public PhysicsSolution()
-            : base("Physics")
+        public LeoSolution()
+            : base("leo")
         {}
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)

@@ -1,6 +1,6 @@
 #pragma once
-#include <physics/simulation/frameparts/bodyinfo.h>
-#include <physics/simulation/frameparts/triggerinfo.h>
+#include <leo/simulation/frameparts/bodyinfo.h>
+#include <leo/simulation/frameparts/triggerinfo.h>
 #include <utils/geometry/vec2.h>
 
 namespace puma::leo

@@ -1,6 +1,6 @@
 #include <precompiledphysics.h>
 
-#include <physics/geometry/overlapcheck.h>
+#include <leo/geometry/overlapcheck.h>
 
 #include <utils/graphics/dimensions.h>
 

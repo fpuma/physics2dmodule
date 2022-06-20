@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/simulation/frames/istaticframe.h>
+#include <leo/simulation/frames/istaticframe.h>
 
 #include <internal/simulation/frames/frame.h>
 

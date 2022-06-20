@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/simulation/frames/idynamicframe.h>
+#include <leo/simulation/frames/idynamicframe.h>
 #include <internal/simulation/frames/frame.h>
 
 class b2Body;

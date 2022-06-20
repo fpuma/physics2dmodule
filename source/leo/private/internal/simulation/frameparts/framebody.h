@@ -1,6 +1,6 @@
 #pragma once
 #include <utils/geometry/vec2.h>
-#include <physics/simulation/frameparts/iframebody.h>
+#include <leo/simulation/frameparts/iframebody.h>
 
 #include <internal/simulation/frameparts/framepart.h>
 

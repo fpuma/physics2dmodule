@@ -1,6 +1,6 @@
 #pragma once
 
-#include <physics/debug/debugdraw.h>
+#include <leo/debug/debugdraw.h>
 
 #include <box2d/b2_draw.h>
 

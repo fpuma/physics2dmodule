@@ -10,7 +10,7 @@ public static class SharpmakeMainClass
     [Sharpmake.Main]
     public static void SharpmakeMain(Sharpmake.Arguments sharpmakeArgs)
     {
-        sharpmakeArgs.Generate<Puma.PhysicsSolution>();
+        sharpmakeArgs.Generate<Puma.LeoSolution>();
         sharpmakeArgs.Generate<Puma.ExternSolution>();
     }
 }

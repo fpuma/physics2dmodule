@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/iphysics.h>
+#include <leo/iphysics.h>
 
 #include <internal/simulation/world/world.h>
 #include <internal/simulation/frameparts/framebody.h>

@@ -2,8 +2,8 @@
 
 #include "world.h"
 
-#include <physics/collisions/collisionlistener.h>
-#include <physics/simulation/frames/frameinfo.h>
+#include <leo/collisions/collisionlistener.h>
+#include <leo/simulation/frames/frameinfo.h>
 
 #include <internal/ids/idhelper.h>
 #include <internal/simulation/frames/dynamicframe.h>

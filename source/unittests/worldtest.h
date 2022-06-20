@@ -2,9 +2,9 @@
 #include <gmock/gmock.h>
 
 #include <precompiledphysics.h>
-#include <physics/iphysics.h>
-#include <physics/simulation/world/iworld.h>
-#include <physics/ids/ids.h>
+#include <leo/iphysics.h>
+#include <leo/simulation/world/iworld.h>
+#include <leo/ids/ids.h>
 
 using namespace puma::leo;
 

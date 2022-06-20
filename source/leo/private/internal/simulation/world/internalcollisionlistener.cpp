@@ -2,7 +2,7 @@
 
 #include "internalcollisionlistener.h"
 
-#include <physics/collisions/collisionlistener.h>
+#include <leo/collisions/collisionlistener.h>
 
 #include <box2d/b2_contact.h>
 

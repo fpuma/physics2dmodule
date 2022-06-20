@@ -1,5 +1,5 @@
 #pragma once
-#include <physics/debug/debugdraw.h>
+#include <leo/debug/debugdraw.h>
 #include <utils/geometry/vec2.h>
 
 namespace puma::leo

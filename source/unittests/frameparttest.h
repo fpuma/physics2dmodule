@@ -2,13 +2,13 @@
 #include <gmock/gmock.h>
 
 #include <precompiledphysics.h>
-#include <physics/iphysics.h>
-#include <physics/simulation/world/iworld.h>
-#include <physics/ids/ids.h>
+#include <leo/iphysics.h>
+#include <leo/simulation/world/iworld.h>
+#include <leo/ids/ids.h>
 
-#include <physics/simulation/frames/frameinfo.h>
-#include <physics/simulation/frames/iframe.h>
-#include <physics/simulation/frameparts/iframepart.h>
+#include <leo/simulation/frames/frameinfo.h>
+#include <leo/simulation/frames/iframe.h>
+#include <leo/simulation/frameparts/iframepart.h>
 
 using namespace puma::leo;
 

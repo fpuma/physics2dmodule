@@ -9,7 +9,7 @@
 
 #include <utils/numerictypes.h>
 #include <utils/noncopyable.h>
-#include <physics/collisions/collissiondefinitions.h>
-#include <physics/simulation/simulationdefinitions.h>
-#include <physics/ids/ids.h>
+#include <leo/collisions/collissiondefinitions.h>
+#include <leo/simulation/simulationdefinitions.h>
+#include <leo/ids/ids.h>
 
