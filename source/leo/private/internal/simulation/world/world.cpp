@@ -25,7 +25,7 @@ namespace puma::leo
         {
             _bodyDef.type = _bodyType;
             _bodyDef.position = { _frameInfo.position.x, _frameInfo.position.y };
-            _bodyDef.angle = GeometryHelpers::degreesToRadians( _frameInfo.angle);
+            _bodyDef.angle = _frameInfo.angle;
             _bodyDef.linearVelocity = { _frameInfo.linearVelocity.x, _frameInfo.linearVelocity.y };
             _bodyDef.angularVelocity = _frameInfo.angularVelocity;
             _bodyDef.linearDamping = _frameInfo.linearDamping;

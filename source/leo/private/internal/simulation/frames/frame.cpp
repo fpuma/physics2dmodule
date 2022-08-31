@@ -50,7 +50,7 @@ namespace puma::leo
 
     float Frame::getAngle() const
     {
-        return GeometryHelpers::radiansToDegrees( m_b2Body->GetAngle() );
+        return m_b2Body->GetAngle();
     }
 
     void Frame::setAngle( float _angle )
