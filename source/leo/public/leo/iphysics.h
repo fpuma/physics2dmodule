@@ -12,6 +12,8 @@ namespace puma::leo
 
         static std::unique_ptr<IPhysics> create();
 
+        virtual void setSimulationTimeStep( float _simulationTimeStep ) = 0;
+
         virtual void update( float _deltaTime ) = 0;
 
         virtual WorldID addWorld( Vec2 _gravity ) = 0;

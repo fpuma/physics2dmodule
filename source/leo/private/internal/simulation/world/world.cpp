@@ -70,20 +70,7 @@ namespace puma::leo
 
     void World::update( float _deltaTime )
     {
-        m_timeAccumulator += _deltaTime;
-
-        int stepsCount = (int)(m_timeAccumulator / m_simulationTimeStep);
-
-        if ( stepsCount > 0 )
-        {
-            m_timeAccumulator -= m_simulationTimeStep * stepsCount;
-
-            while (stepsCount != 0)
-            {
-                m_b2World.Step( m_simulationTimeStep, 6, 2 );
-                --stepsCount;
-            }
-        }
+        m_b2World.Step( _deltaTime, 6, 2 );
     }
 
     Vec2 World::getGravity() const 

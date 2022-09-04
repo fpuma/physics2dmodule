@@ -27,8 +27,6 @@ namespace puma::leo
 
         void update( float _deltaTime ) override;
 
-        void setSimulationTimeStep( float _simulationTimeStep ) override { m_simulationTimeStep = _simulationTimeStep; }
-
         Vec2 getGravity() const override;
         void setGravity( const Vec2& _gravity ) override;
 
@@ -75,9 +73,6 @@ namespace puma::leo
 
         void removeFrame( Frame* _frame, FrameType _frameType, u32 _frameIndex );
 
-        float m_simulationTimeStep = 1.0f / 60.0f;
-        float m_timeAccumulator = 0.0f;
-        
         const WorldID m_worldId;
 
         u32 m_collisionCompatibility[kMaxCollisionCateogries] = { };

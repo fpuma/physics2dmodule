@@ -36,8 +36,6 @@ namespace puma::leo
 
         virtual void update( float _deltaTime ) = 0;
 
-        virtual void setSimulationTimeStep( float _simulationTimeStep ) = 0;
-
         virtual void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) = 0;
         virtual CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const = 0;
 

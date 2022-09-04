@@ -12,7 +12,9 @@ namespace puma::leo
     class Physics : public IPhysics, public NonCopyable
     {
     public:
-                
+              
+        void setSimulationTimeStep( float _simulationTimeStep ) override { m_simulationTimeStep = _simulationTimeStep; }
+
         void update( float _deltaTime ) override;
 
         WorldID addWorld( Vec2 _gravity ) override;
@@ -50,5 +52,8 @@ namespace puma::leo
 
         std::vector<WorldPtr> m_worlds = {};
         u32 m_worldCount = 0;
+
+        float m_simulationTimeStep = 1.0f / 60.0f;
+        float m_timeAccumulator = 0.0f;
     };
 }

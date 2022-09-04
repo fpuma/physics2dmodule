@@ -17,9 +17,21 @@ namespace puma::leo
 
     void Physics::update( float _deltaTime )
     {
-        for( WorldPtr& world : m_worlds)
+        m_timeAccumulator += _deltaTime;
+        int stepsCount = static_cast<int>(m_timeAccumulator / m_simulationTimeStep);
+
+        if (stepsCount > 0)
         {
-            world->update( _deltaTime );
+            m_timeAccumulator -= m_simulationTimeStep * stepsCount;
+
+            while (stepsCount != 0)
+            {
+                for (WorldPtr& world : m_worlds)
+                {
+                    world->update( m_simulationTimeStep );
+                }
+                --stepsCount;
+            }
         }
     }
 
