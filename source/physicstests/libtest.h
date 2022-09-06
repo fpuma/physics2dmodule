@@ -95,9 +95,9 @@ public:
 class MyCollisionListener : public ICollisionListener
 {
 public:
-    void collisionStarted( FramePartID _framePartIdA, FramePartID _framePartIdB ) override
+    void collisionStarted( FramePartID _framePartIdA, FramePartID _framePartIdB, ContactPoint _contactPoint ) override
     {
-        std::cout << "Contact between: " << (char*)m_physics->getFramePart( _framePartIdA )->getUserData() << " and " << (char*)m_physics->getFramePart( _framePartIdB )->getUserData() << " STARTED" << std::endl;
+        std::cout << "Contact between: " << (char*)m_physics->getFramePart( _framePartIdA )->getUserData() << " and " << (char*)m_physics->getFramePart( _framePartIdB )->getUserData() << " STARTED at " << _contactPoint.x << " | " << _contactPoint.y << std::endl;
     }
 
     void collisionStopped( FramePartID _framePartIdA, FramePartID _framePartIdB ) override
