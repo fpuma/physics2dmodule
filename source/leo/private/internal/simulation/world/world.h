@@ -47,7 +47,6 @@ namespace puma::leo
         const KinematicFrame* getKinematicFrame( const FrameID& _frameId ) const override;
 
         void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) override;
-        CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const override;
         void setCollisionListener( std::unique_ptr<ICollisionListener>&& _collisionListener ) override;
 
         void setDebugDraw( std::unique_ptr<DebugDraw>&& _debugDraw ) override;
@@ -68,6 +67,8 @@ namespace puma::leo
         
         KinematicFrame* getKinematicFrame( PhysicsID _index )             { assert( _index < m_kinematicFrames.size() ); return m_kinematicFrames[_index].isValid() ? &m_kinematicFrames[_index] : nullptr; }
         const KinematicFrame* getKinematicFrame( PhysicsID _index ) const { assert( _index < m_kinematicFrames.size() ); return m_kinematicFrames[_index].isValid() ? &m_kinematicFrames[_index] : nullptr; }
+
+        CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const;
 
     private:
 

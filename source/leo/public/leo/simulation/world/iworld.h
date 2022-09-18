@@ -37,7 +37,6 @@ namespace puma::leo
         virtual void update( float _deltaTime ) = 0;
 
         virtual void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) = 0;
-        virtual CollisionMask getCollisionMask( CollisionIndex _collisionIndex ) const = 0;
 
         virtual void setCollisionListener( std::unique_ptr<ICollisionListener>&& _collisionListener ) = 0;
 

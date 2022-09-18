@@ -116,6 +116,7 @@ namespace puma::leo
     FramePartID Frame::addBody( const BodyInfo& _bodyInfo )
     {
         assert( m_framePartCount < kMaxFramePartCount );
+        assert( _bodyInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
 
         auto foundIt = std::find_if( m_frameBodies.begin(), m_frameBodies.end(), []( const FrameBody& frameBody ) { return !frameBody.isValid(); } );
 
@@ -146,6 +147,7 @@ namespace puma::leo
     FramePartID Frame::addTrigger( const TriggerInfo& _triggerInfo )
     {
         assert( m_framePartCount < kMaxFramePartCount );
+        assert( _triggerInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
 
         auto foundIt = std::find_if( m_frameTriggers.begin(), m_frameTriggers.end(), []( const FrameTrigger& frameTrigger ) { return !frameTrigger.isValid(); } );
 

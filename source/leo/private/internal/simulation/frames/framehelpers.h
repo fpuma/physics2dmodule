@@ -71,6 +71,8 @@ namespace puma::leo
 
     b2Fixture* addBodyFixture( b2Body* _body, const BodyInfo& _bodyInfo, const CollisionMask _collisionMask )
     {
+        assert( _bodyInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
+
         b2FixtureDef fixDef;
         Box2DShapes b2Shapes;
         
@@ -86,6 +88,8 @@ namespace puma::leo
 
     b2Fixture* addTriggerFixture( b2Body* _body, const TriggerInfo& _triggerInfo, const CollisionMask _collisionMask )
     {
+        assert( _triggerInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
+
         b2FixtureDef fixDef;
         Box2DShapes b2Shapes;
 
