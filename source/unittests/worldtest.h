@@ -36,11 +36,14 @@ TEST( WorldManagement, AddingRemovingWorlds )
 
     physicsPtr->removeWorld( worldId1 );
 
+    physicsPtr->update( 0.1f );
+
     EXPECT_EQ( physicsPtr->getWorld( worldId0 )->getWorldID().value(), worldId0.value() );
     EXPECT_EQ( physicsPtr->getWorld( worldId1 ), nullptr );
     EXPECT_EQ( physicsPtr->getWorld( worldId2 )->getWorldID().value(), worldId2.value() );
     EXPECT_EQ( physicsPtr->getWorld( worldId3 )->getWorldID().value(), worldId3.value() );
 
     WorldID worldId4 = physicsPtr->addWorld( { 0.0f,0.0f } );
+    EXPECT_EQ( worldId1, worldId4 );
     EXPECT_EQ( physicsPtr->getWorld( worldId4 )->getWorldID().value(), worldId4.value() );
 }

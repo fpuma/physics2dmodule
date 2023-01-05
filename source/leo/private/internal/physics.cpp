@@ -28,7 +28,10 @@ namespace puma::leo
             {
                 for (WorldPtr& world : m_worlds)
                 {
-                    world->update( m_simulationTimeStep );
+                    if (nullptr != world)
+                    {
+                        world->update( m_simulationTimeStep );
+                    }
                 }
                 --stepsCount;
             }
@@ -107,7 +110,7 @@ namespace puma::leo
             default: assert( false ); break;
             }
 
-            //[fpuma] This is messing with the unit tests. Replace for a log. Returning nullptr should be valid
+            //[fpuma] This is messing with the unit tests. Replace with a log. Returning nullptr should be valid
             //assert( nullptr != framePartPtr );
 
             if ( nullptr != _outFramePartType )
