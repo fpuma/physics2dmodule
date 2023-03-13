@@ -7,7 +7,11 @@ namespace puma::leo
     const u32 kInvalidPhysicsID = kMaxU32;
     using PhysicsID = u32;
     
-    DECLARE_GENERIC_ID( WorldID, PhysicsID, kInvalidPhysicsID)
-    DECLARE_GENERIC_ID( FrameID, PhysicsID, kInvalidPhysicsID )
-    DECLARE_GENERIC_ID( FramePartID, PhysicsID, kInvalidPhysicsID )
+    class WorldID;
+    class FrameID;
+    class FramePartID;
 }
+
+DECLARE_GENERIC_ID( puma::leo::WorldID, puma::leo::PhysicsID, kInvalidPhysicsID)
+DECLARE_GENERIC_ID( puma::leo::FrameID, puma::leo::PhysicsID, kInvalidPhysicsID )
+DECLARE_GENERIC_ID( puma::leo::FramePartID, puma::leo::PhysicsID, kInvalidPhysicsID )
