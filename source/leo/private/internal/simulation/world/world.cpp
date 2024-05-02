@@ -52,17 +52,6 @@ namespace puma::leo
         m_b2World.SetContactListener( &m_internalCollisionListener );
     }
 
-    World::World( World&& _world ) noexcept
-        : m_worldId( _world.m_worldId )
-        , m_b2World( std::move(_world.m_b2World) )
-        , m_internalDebugDraw ( std::move( _world.m_internalDebugDraw ) )
-        , m_internalCollisionListener ( std::move(_world.m_internalCollisionListener) )
-    {
-        m_internalDebugDraw.SetFlags( b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_aabbBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit );
-        m_b2World.SetDebugDraw( &m_internalDebugDraw );
-        m_b2World.SetContactListener( &m_internalCollisionListener );
-    }
-
     World::~World()
     {
 
