@@ -4,3 +4,6 @@
 [submodule "extern/box2d"]
 	path = extern/box2d
 	url = https://github.com/erincatto/box2d.git
+[submodule "sharpmake/sharpmakeutils"]
+	path = sharpmake/sharpmakeutils
+	url = https://github.com/fpuma/SharpmakeUtils.git
