@@ -1,10 +1,10 @@
 namespace Puma
 {
     [Sharpmake.Generate]
-    class PhysicsTests : Puma.Common.IMyApplication
+    class PhysicsTests : Puma.SharpmakeBase.IApplication
     {
         public PhysicsTests()
-            : base("PhysicsTests", @"physicstests")
+            : base("PhysicsTests", @"tests\physicstests")
         { }
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)

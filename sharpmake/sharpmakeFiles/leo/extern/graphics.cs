@@ -1,10 +1,10 @@
 namespace Puma
 {
     [Sharpmake.Export]
-    class Graphics : Puma.Common.IExternBinaries
+    class Graphics : Puma.SharpmakeBase.IBinaries
     {
         public Graphics()
-            : base("Utils", @"graphics")
+            : base("Utils", @"tests\graphics")
         { }
 
         public override void ConfigureIncludes(Configuration conf, Sharpmake.Target target)

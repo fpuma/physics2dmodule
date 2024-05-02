@@ -1,7 +1,7 @@
 namespace Puma
 {
     [Sharpmake.Generate]
-    class Leo : Puma.Common.IMyLib
+    class Leo : Puma.SharpmakeBase.IStaticLibrary
     {
         public Leo()
             : base("Leo", @"leo")
@@ -11,7 +11,7 @@ namespace Puma
         {
             base.ConfigureAll(conf, target);
 
-            conf.AddPrivateDependency<Export.Box2D>(target);
+            conf.AddPrivateDependency<Extern.Box2D>(target);
             conf.AddPublicDependency<Puma.Utils>(target);
 
             conf.IncludePrivatePaths.Add(@"\private");

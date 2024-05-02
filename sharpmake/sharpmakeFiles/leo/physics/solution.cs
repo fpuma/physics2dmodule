@@ -3,7 +3,7 @@ using System.IO;
 namespace Puma
 {
     [Sharpmake.Generate]
-    public class LeoSolution : Puma.Common.IMySolution
+    public class LeoSolution : Puma.SharpmakeBase.ISolution
     {
         public LeoSolution()
             : base("leo")
@@ -17,23 +17,7 @@ namespace Puma
             conf.AddProject<Puma.Leo>( target );
             conf.AddProject<Puma.Box2DTest>(target);
             conf.AddProject<Puma.UnitTests>(target);
-        }
-    }
-
-
-    [Sharpmake.Generate]
-    public class ExternSolution : Puma.Common.IMySolution
-    {
-        public ExternSolution()
-            : base("ExternLibs")
-        { }
-
-        public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
-        {
-            base.ConfigureAll(conf, target);
-
             conf.AddProject<Extern.Box2D>(target);
         }
     }
-
 }

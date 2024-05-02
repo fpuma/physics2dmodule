@@ -1,9 +1,9 @@
 using System.IO;
 
-[module: Sharpmake.Include(@"..\base\*")]
+[module: Sharpmake.Include(@"..\..\sharpmakeutils\utils\*")]
 
-[module: Sharpmake.Include(@"..\extern\*")]
-[module: Sharpmake.Include(@"..\physics\*")]
+[module: Sharpmake.Include(@"..\leo\physics\*")]
+[module: Sharpmake.Include(@"..\leo\extern\*")]
 
 public static class SharpmakeMainClass
 {
@@ -11,7 +11,6 @@ public static class SharpmakeMainClass
     public static void SharpmakeMain(Sharpmake.Arguments sharpmakeArgs)
     {
         sharpmakeArgs.Generate<Puma.LeoSolution>();
-        sharpmakeArgs.Generate<Puma.ExternSolution>();
     }
 }
 

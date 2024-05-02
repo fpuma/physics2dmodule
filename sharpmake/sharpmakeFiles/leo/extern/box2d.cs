@@ -1,10 +1,10 @@
 namespace Extern
 {
     [Sharpmake.Generate]
-    class Box2D : Puma.Common.IExternLib
+    class Box2D : Puma.SharpmakeBase.IStaticLibrary
     {
         public Box2D()
-            : base("Box2D", @"box2d")
+            : base("Box2D", @"submodules\box2d")
         { }
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
@@ -20,17 +20,8 @@ namespace Extern
 
             conf.IncludePrivatePaths.Add(SourceRootPath + @"\src");
             conf.IncludePaths.Add(SourceRootPath + @"\include");
-        }
-    }
-}
 
-namespace Export
-{
-    [Sharpmake.Export]
-    class Box2D : Extern.Box2D
-    {
-        public Box2D()
-            : base()
-        { }
+            conf.SolutionFolder = "Extern";
+        }
     }
 }

@@ -1,18 +1,15 @@
 namespace Puma
 {
-    [Sharpmake.Generate]
-    class Utils : Puma.Common.IExternLib
+    [Sharpmake.Export]
+    class Utils : Puma.SharpmakeBase.IHeaderOnly
     {
         public Utils()
-            : base("Utils", @"utils\source\utils")
+            : base("Utils", @"submodules\utils\source\utils")
         { }
 
-        public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
+        public override void ConfigureIncludes(Configuration conf, Sharpmake.Target target)
         {
-            base.ConfigureAll(conf, target);
-
-            conf.IncludePrivatePaths.Add(@"\private");
-            conf.IncludePaths.Add(@"\public");
+            conf.IncludePaths.Add(@"\include");
 
             conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);
 

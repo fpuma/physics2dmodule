@@ -1,10 +1,10 @@
 namespace Puma
 {
     [Sharpmake.Export]
-    class GoogleTest : Puma.Common.IExternBinaries
+    class GoogleTest : Puma.SharpmakeBase.IBinaries
     {
         public GoogleTest()
-            : base("GTest", @"googletest-release-1.12.1")
+            : base("GTest", @"tests\googletest-release-1.12.1")
         { }
 
         public override void ConfigureIncludes(Configuration conf, Sharpmake.Target target)
@@ -32,18 +32,7 @@ namespace Puma
                 conf.LibraryFiles.Add(@"gtest.lib");
             }
 
+            conf.SolutionFolder = "Extern";
         }
-
-        //public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
-        //{
-        //    base.ConfigureAll(conf, target);
-
-        //    conf.IncludePrivatePaths.Add(@"\private");
-        //    conf.IncludePaths.Add(@"\public");
-
-        //    conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);
-
-        //    conf.SolutionFolder = "Extern";
-        //}
     }
 }
