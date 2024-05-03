@@ -16,11 +16,6 @@ namespace Puma
 
             conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);
 
-            if(target.Optimization != Sharpmake.Optimization.Debug)
-            {
-                conf.IsExcludedFromBuild = true;
-            }
-
             conf.SolutionFolder = "Tests";
         }
     }

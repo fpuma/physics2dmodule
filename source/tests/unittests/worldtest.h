@@ -17,7 +17,9 @@ TEST( WorldManagement, WorldCountCap )
     WorldID worldId2 = physicsPtr->addWorld( { 0.0f,0.0f } );
     WorldID worldId3 = physicsPtr->addWorld( { 0.0f,0.0f } );
 
+#ifdef _DEBUG
     EXPECT_DEATH( physicsPtr->addWorld( { 0.0f,0.0f } ), "m_worldCount < kMaxWorldCount" );
+#endif
 }
 
 TEST( WorldManagement, AddingRemovingWorlds )
