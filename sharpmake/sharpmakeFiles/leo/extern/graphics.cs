@@ -1,10 +1,10 @@
 namespace Puma
 {
-    [Sharpmake.Export]
+    [Sharpmake.Generate]
     class Graphics : Puma.SharpmakeBase.IBinaries
     {
         public Graphics()
-            : base("Utils", @"tests\graphics")
+            : base("Graphics", @"tests\graphics")
         { }
 
         public override void ConfigureIncludes(Configuration conf, Sharpmake.Target target)
@@ -20,13 +20,11 @@ namespace Puma
             {
                 conf.LibraryFiles.Add("gfx2dapp_d.lib"); 
                 conf.LibraryFiles.Add("sdlgfx_d.lib");
-                conf.LibraryFiles.Add("utils_d.lib");
             }
             else
             {
                 conf.LibraryFiles.Add("gfx2dapp_r.lib");
                 conf.LibraryFiles.Add("sdlgfx_r.lib");
-                conf.LibraryFiles.Add("utils_r.lib");
             }
 
             conf.LibraryFiles.Add("SDL2.lib");
@@ -43,6 +41,8 @@ namespace Puma
             conf.TargetCopyFiles.Add(SourceRootPath + @"\bin\SDL2_image.dll");
             conf.TargetCopyFiles.Add(SourceRootPath + @"\bin\SDL2_ttf.dll");
             conf.TargetCopyFiles.Add(SourceRootPath + @"\bin\zlib1.dll");
+
+            conf.SolutionFolder = "Tests";
         }
     }
 }

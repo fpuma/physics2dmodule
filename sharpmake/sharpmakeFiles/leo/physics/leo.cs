@@ -12,7 +12,7 @@ namespace Puma
             base.ConfigureAll(conf, target);
 
             conf.AddPrivateDependency<Extern.Box2D>(target);
-            conf.AddPublicDependency<Puma.Utils>(target);
+            conf.AddPublicDependency<Puma.UtilsLib>(target);
 
             conf.IncludePrivatePaths.Add(@"\private");
             conf.IncludePaths.Add(@"\public");

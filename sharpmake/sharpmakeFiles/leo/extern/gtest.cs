@@ -1,6 +1,6 @@
 namespace Puma
 {
-    [Sharpmake.Export]
+    [Sharpmake.Generate]
     class GoogleTest : Puma.SharpmakeBase.IBinaries
     {
         public GoogleTest()
@@ -32,7 +32,7 @@ namespace Puma
                 conf.LibraryFiles.Add(@"gtest.lib");
             }
 
-            conf.SolutionFolder = "Extern";
+            conf.SolutionFolder = "Tests";
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Puma
     public class LeoSolution : Puma.SharpmakeBase.ISolution
     {
         public LeoSolution()
-            : base("leo")
+            : base("Leo")
         {}
 
         public override void ConfigureAll(Configuration conf, Sharpmake.Target target)
@@ -17,7 +17,6 @@ namespace Puma
             conf.AddProject<Puma.Leo>( target );
             conf.AddProject<Puma.Box2DTest>(target);
             conf.AddProject<Puma.UnitTests>(target);
-            conf.AddProject<Extern.Box2D>(target);
         }
     }
 }

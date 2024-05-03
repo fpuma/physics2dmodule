@@ -20,6 +20,8 @@ namespace Puma
             {
                 conf.IsExcludedFromBuild = true;
             }
+
+            conf.SolutionFolder = "Tests";
         }
     }
 }

@@ -13,10 +13,11 @@ namespace Puma
 
             conf.AddPublicDependency<Extern.Box2D>(target);
             conf.AddPublicDependency<Puma.Graphics>(target);
-            conf.AddPublicDependency<Puma.Utils>(target);
+            conf.AddPublicDependency<Puma.UtilsLib>(target);
 
             conf.Options.Add(Sharpmake.Options.Vc.General.TreatWarningsAsErrors.Enable);
 
+            conf.SolutionFolder = "Tests";
         }
     }
 }
