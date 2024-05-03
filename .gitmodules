@@ -1,6 +1,9 @@
-[submodule "extern/utils"]
-	path = extern/utils
-	url = https://github.com/fpuma/utilslibrary.git
-[submodule "extern/box2d"]
-	path = extern/box2d
+[submodule "sharpmake/sharpmakeutils"]
+	path = sharpmake/sharpmakeutils
+	url = https://github.com/fpuma/SharpmakeUtils.git
+[submodule "source/submodules/box2d"]
+	path = source/submodules/box2d
 	url = https://github.com/erincatto/box2d.git
+[submodule "source/submodules/utils"]
+	path = source/submodules/utils
+	url = https://github.com/fpuma/utilslibrary.git
