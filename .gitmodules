@@ -6,4 +6,4 @@
 	url = https://github.com/erincatto/box2d.git
 [submodule "source/submodules/utils"]
 	path = source/submodules/utils
-	url = https://github.com/fpuma/utilslibrary.git
+	url = https://github.com/fpuma/Utils.git
