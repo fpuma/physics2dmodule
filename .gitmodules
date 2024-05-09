@@ -1,9 +1,6 @@
-[submodule "sharpmake/sharpmakeutils"]
-	path = sharpmake/sharpmakeutils
-	url = https://github.com/fpuma/SharpmakeUtils.git
-[submodule "source/submodules/box2d"]
-	path = source/submodules/box2d
-	url = https://github.com/erincatto/box2d.git
-[submodule "source/submodules/utils"]
-	path = source/submodules/utils
+[submodule "utils"]
+	path = utils
 	url = https://github.com/fpuma/Utils.git
+[submodule "box2d"]
+	path = box2d
+	url = https://github.com/erincatto/box2d.git
