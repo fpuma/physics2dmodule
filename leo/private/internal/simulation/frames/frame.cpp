@@ -17,6 +17,33 @@
 namespace puma::leo
 {
 
+    namespace
+    {
+        template <class FramePartType, class IdBuilderFunction>
+        FramePartType* addFramePart(std::vector<FramePartType>& _frames, FrameID _frameId, bool _reuseIds, IdBuilderFunction _idBuilder)
+        {
+            FramePartType* newFramePart = nullptr;
+
+            if (_reuseIds)
+            {
+                auto foundIt = std::find_if(_frames.begin(), _frames.end(), [](const FramePartType& frame) { return !frame.isValid(); });
+                if (foundIt != _frames.end())
+                {
+                    newFramePart = foundIt._Ptr;
+                }
+            }
+
+            if (nullptr == newFramePart)
+            {
+                FramePartID id{ _idBuilder(_frameId.value(), (u32)_frames.size()) };
+                _frames.emplace_back(id);
+                newFramePart = &_frames.back();
+            }
+
+            return newFramePart;
+        }
+    }
+
     Frame::Frame( const World* _worldPtr, FrameID _frameId )
         : m_world( _worldPtr )
         , m_frameId( _frameId )
@@ -118,26 +145,12 @@ namespace puma::leo
         assert( m_framePartCount < kMaxFramePartCount );
         assert( _bodyInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
 
-        auto foundIt = std::find_if( m_frameBodies.begin(), m_frameBodies.end(), []( const FrameBody& frameBody ) { return !frameBody.isValid(); } );
-
         b2Fixture* fixture = addBodyFixture( m_b2Body, _bodyInfo, m_world->getCollisionMask( _bodyInfo.collisionIndex ) );
         
-        FrameBody* newFramePart;
-        if ( foundIt == m_frameBodies.end() )
-        {
-            FramePartID id( IdHelper::buildFrameBodyID( m_frameId.value(), (u32)m_frameBodies.size() ) );
-            m_frameBodies.emplace_back( id );
-            newFramePart = &m_frameBodies.back();
-            
-            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
-            newFramePart->setUserData( _bodyInfo.userData );
-        }
-        else
-        {
-            newFramePart = foundIt._Ptr;
-            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
-        }
-        
+        FrameBody* newFramePart = addFramePart(m_frameBodies, m_frameId, m_world->isReusingRemovedIds(), IdHelper::buildFrameBodyID);
+        assert(nullptr != newFramePart);
+        newFramePart->setUserData(_bodyInfo.userData);
+        newFramePart->getInternalFramePart()->setB2Fixture( fixture );
         fixture->GetUserData().pointer = newFramePart->getID().value();
 
         ++m_framePartCount;
@@ -149,26 +162,12 @@ namespace puma::leo
         assert( m_framePartCount < kMaxFramePartCount );
         assert( _triggerInfo.collisionIndex < kMaxCollisionCateogries ); // Collision index must be lower than max collision categories
 
-        auto foundIt = std::find_if( m_frameTriggers.begin(), m_frameTriggers.end(), []( const FrameTrigger& frameTrigger ) { return !frameTrigger.isValid(); } );
-
         b2Fixture* fixture = addTriggerFixture( m_b2Body, _triggerInfo, m_world->getCollisionMask( _triggerInfo.collisionIndex ) );
         
-        FrameTrigger* newFramePart;
-        if ( foundIt == m_frameTriggers.end() )
-        {
-            FramePartID id( IdHelper::buildFrameTriggerID( m_frameId.value(), (u32)m_frameTriggers.size() ) );
-            m_frameTriggers.emplace_back( id );
-            newFramePart = &m_frameTriggers.back();
-
-            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
-            newFramePart->setUserData( _triggerInfo.userData );
-        }
-        else
-        {
-            newFramePart = foundIt._Ptr;
-            newFramePart->getInternalFramePart()->setB2Fixture( fixture );
-        }
-
+        FrameTrigger* newFramePart = addFramePart(m_frameTriggers, m_frameId, m_world->isReusingRemovedIds(), IdHelper::buildFrameTriggerID);    
+        assert(nullptr != newFramePart);
+        newFramePart->setUserData( _triggerInfo.userData );
+        newFramePart->getInternalFramePart()->setB2Fixture( fixture );
         fixture->GetUserData().pointer = newFramePart->getID().value();
 
         ++m_framePartCount;
@@ -371,6 +370,21 @@ namespace puma::leo
         }
 
         return framePtr;
+    }
+
+    void Frame::clean()
+    {
+        setB2Body(nullptr);
+
+        m_frameBodies.clear();
+        m_frameBodies.shrink_to_fit();
+        assert(m_frameBodies.capacity() == 0);
+
+        m_frameTriggers.clear();
+        m_frameTriggers.shrink_to_fit();
+        assert(m_frameTriggers.capacity() == 0);
+
+        m_framePartCount = 0;
     }
 
     void Frame::removeFramePart( FramePart* _framePart, FramePartType _framePartType, PhysicsID _framePartIndex )

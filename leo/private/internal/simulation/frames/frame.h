@@ -82,6 +82,8 @@ namespace puma::leo
 
         void setB2Body( b2Body* _body ) { m_b2Body = _body; }
 
+        void clean();
+
     private:
 
         void removeFramePart( FramePart* _framePart, FramePartType _framePartType, PhysicsID _framePartIndex );
@@ -95,6 +97,6 @@ namespace puma::leo
 
         u32 m_framePartCount = 0;
 
-        FrameID m_frameId;
+        const FrameID m_frameId;
     };
 }

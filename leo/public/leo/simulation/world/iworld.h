@@ -40,6 +40,9 @@ namespace puma::leo
 
         virtual void setCollisionListener( std::unique_ptr<ICollisionListener>&& _collisionListener ) = 0;
 
+        virtual void setReuseRemovedIds(bool _reuse) = 0;
+        virtual bool isReusingRemovedIds() const = 0;
+
         virtual void setDebugDraw( std::unique_ptr<DebugDraw>&& _debugDraw ) = 0;
         virtual void debugDraw() = 0;
     };

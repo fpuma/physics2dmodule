@@ -49,6 +49,9 @@ namespace puma::leo
         void setCollisionCompatibility( const CollisionCompatibility& _collisionCompatibility ) override;
         void setCollisionListener( std::unique_ptr<ICollisionListener>&& _collisionListener ) override;
 
+        void setReuseRemovedIds(bool _reuse) { m_reuseRemovedIds = _reuse; }
+        bool isReusingRemovedIds() const { return m_reuseRemovedIds; }
+
         void setDebugDraw( std::unique_ptr<DebugDraw>&& _debugDraw ) override;
         void debugDraw() override;
 
@@ -86,6 +89,7 @@ namespace puma::leo
         std::vector<KinematicFrame> m_kinematicFrames;
         
         u32 m_frameCount = 0;
+        bool m_reuseRemovedIds = true;
 
         b2World m_b2World;
 
