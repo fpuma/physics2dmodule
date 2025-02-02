@@ -21,11 +21,6 @@ namespace puma::leo
     {
     }
 
-    /*Vec2 Body::getOffset() const
-    {
-        return m_offset;
-    }*/
-
     float FramePart::getFriction() const
     {
         assert( isValid() );

@@ -18,6 +18,8 @@ TEST( FrameManagement, AddingRemovingFrames )
     WorldID worldId = physicsPtr->addWorld( { 0.0f,0.0f } );
     IWorld* worldPtr = physicsPtr->getWorld( worldId );
 
+    worldPtr->setReuseRemovedIds(false);
+
     //Dynamic
     FrameID frameId0 = worldPtr->addDynamicFrame( {} );
     FrameID frameId1 = worldPtr->addDynamicFrame( {} );
@@ -73,6 +75,10 @@ TEST( FrameManagement, AddingRemovingFrames )
     FrameID frameId12 = worldPtr->addDynamicFrame( {} );
     FrameID frameId13 = worldPtr->addStaticFrame( {} );
     FrameID frameId14 = worldPtr->addKinematicFrame( {} );
+
+    EXPECT_EQ(physicsPtr->getFrame(frameId1), nullptr);
+    EXPECT_EQ(physicsPtr->getFrame(frameId6), nullptr);
+    EXPECT_EQ(physicsPtr->getFrame(frameId9), nullptr);
 
     EXPECT_EQ( physicsPtr->getFrame( frameId12 )->getID().value(), frameId12.value() );
     EXPECT_EQ( physicsPtr->getFrame( frameId13 )->getID().value(), frameId13.value() );

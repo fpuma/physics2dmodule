@@ -21,6 +21,7 @@ TEST( FramePartManagement, AddingRemovingFrameParts )
     FrameID frameId = worldPtr->addDynamicFrame( {} );
     IFrame* framePtr = physicsPtr->getFrame( frameId );
 
+    worldPtr->setReuseRemovedIds(false);
 
     //Body
     FramePartID framePartId0 = framePtr->addBody( {} );
@@ -60,6 +61,9 @@ TEST( FramePartManagement, AddingRemovingFrameParts )
     //Adding new
     FramePartID framePartId8 = framePtr->addBody( {} );
     FramePartID framePartId9 = framePtr->addTrigger( {} );
+
+    EXPECT_EQ(physicsPtr->getFramePart(framePartId1), nullptr);
+    EXPECT_EQ(physicsPtr->getFramePart(framePartId6), nullptr);
 
     EXPECT_EQ( physicsPtr->getFramePart( framePartId8 )->getID().value(), framePartId8.value() );
     EXPECT_EQ( physicsPtr->getFramePart( framePartId9 )->getID().value(), framePartId9.value() );

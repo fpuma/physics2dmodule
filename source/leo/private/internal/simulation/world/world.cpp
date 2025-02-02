@@ -38,6 +38,30 @@ namespace puma::leo
             //_bodyDef.userData
             _bodyDef.gravityScale = _frameInfo.gravityScale;
         }
+
+        template <class FrameType, class IdBuilderFunction>
+        FrameType* addFrame(World* _world, std::vector<FrameType>& _frames, bool _reuseIds, IdBuilderFunction _idBuilder)
+        {
+            FrameType* newFrame = nullptr;
+
+            if (_reuseIds)
+            {
+                auto foundIt = std::find_if(_frames.begin(), _frames.end(), [](const FrameType& frame) { return !frame.isValid(); });
+                if (foundIt != _frames.end())
+                {
+                    newFrame = foundIt._Ptr;
+                }
+            }
+
+            if (nullptr == newFrame)
+            {
+                FrameID id{ _idBuilder(_world->getWorldID().value(), (u32)_frames.size())};
+                _frames.emplace_back(_world, id);
+                newFrame = &_frames.back();
+            }
+
+            return newFrame;
+        }
     }
 
     //World
@@ -81,23 +105,11 @@ namespace puma::leo
         b2BodyDef bodyDef;
         setBodyDef( bodyDef, b2_dynamicBody, _frameInfo );
         b2Body* body = m_b2World.CreateBody( &bodyDef );
+        body->GetUserData().pointer = 0;
 
-        DynamicFrame* newFrame;
-        if ( foundIt == m_dynamicFrames.end() )
-        {
-            FrameID id{ IdHelper::buildDynamicFrameID( m_worldId.value(), (u32)m_dynamicFrames.size() ) };
-            m_dynamicFrames.emplace_back( this, id );
-            body->GetUserData().pointer = 0;
-            newFrame = &m_dynamicFrames.back();
-
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
-        else
-        {
-            newFrame = foundIt._Ptr;
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
-
+        DynamicFrame* newFrame = addFrame(this, m_dynamicFrames, m_reuseRemovedIds, IdHelper::buildDynamicFrameID);
+        newFrame->getInternalFrame()->setB2Body( body );
+       
         ++m_frameCount;
 
         return newFrame->getID();
@@ -107,27 +119,14 @@ namespace puma::leo
     {
         assert( m_frameCount < kMaxFrameCount );
 
-        auto foundIt = std::find_if( m_staticFrames.begin(), m_staticFrames.end(), []( const StaticFrame& staticFrame ) { return !staticFrame.isValid(); } );
-
         b2BodyDef bodyDef;
         setBodyDef( bodyDef, b2_staticBody, _frameInfo );
         b2Body* body = m_b2World.CreateBody( &bodyDef );
+        body->GetUserData().pointer = 0;
 
-        StaticFrame* newFrame;
-        if ( foundIt == m_staticFrames.end() )
-        {
-            FrameID id{ IdHelper::buildStaticFrameID( m_worldId.value(), (u32)m_staticFrames.size() ) };
-            m_staticFrames.emplace_back( this, id );
-            body->GetUserData().pointer = 0;
-            newFrame = &m_staticFrames.back();
-            
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
-        else
-        {
-            newFrame = foundIt._Ptr;
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
+        StaticFrame* newFrame = addFrame(this, m_staticFrames, m_reuseRemovedIds, IdHelper::buildStaticFrameID);
+        assert(nullptr != newFrame);
+        newFrame->getInternalFrame()->setB2Body( body );
 
         ++m_frameCount;
 
@@ -143,22 +142,11 @@ namespace puma::leo
         b2BodyDef bodyDef;
         setBodyDef( bodyDef, b2_kinematicBody, _frameInfo );
         b2Body* body = m_b2World.CreateBody( &bodyDef );
+        body->GetUserData().pointer = 0;
 
-        KinematicFrame* newFrame;
-        if ( foundIt == m_kinematicFrames.end() )
-        {
-            FrameID id{ IdHelper::buildKinematicFrameID( m_worldId.value(), (u32)m_kinematicFrames.size() ) };
-            m_kinematicFrames.emplace_back( this, id );
-            body->GetUserData().pointer = 0;
-            newFrame = &m_kinematicFrames.back();
-
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
-        else
-        {
-            newFrame = foundIt._Ptr;
-            newFrame->getInternalFrame()->setB2Body( body );
-        }
+        KinematicFrame* newFrame = addFrame(this, m_kinematicFrames, m_reuseRemovedIds, IdHelper::buildKinematicFrameID);
+        assert(nullptr != newFrame);
+        newFrame->getInternalFrame()->setB2Body( body );
 
         ++m_frameCount;
 
@@ -411,19 +399,19 @@ namespace puma::leo
         case FrameType::Dynamic:    
         {
             assert( _frameIndex < m_dynamicFrames.size() );
-            m_dynamicFrames[_frameIndex].getInternalFrame()->setB2Body(nullptr);
+            m_dynamicFrames[_frameIndex].getInternalFrame()->clean();
             break;
         }
         case FrameType::Static:  
         {
             assert( _frameIndex < m_staticFrames.size() );
-            m_staticFrames[_frameIndex].getInternalFrame()->setB2Body( nullptr );
+            m_staticFrames[_frameIndex].getInternalFrame()->clean();
             break;
         }
         case FrameType::Kinematic:  
         {
             assert( _frameIndex < m_kinematicFrames.size() );
-            m_kinematicFrames[_frameIndex].getInternalFrame()->setB2Body( nullptr );
+            m_kinematicFrames[_frameIndex].getInternalFrame()->clean();
             break;
         }
         default: assert( false ); break;

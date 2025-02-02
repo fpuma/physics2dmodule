@@ -110,9 +110,6 @@ namespace puma::leo
             default: assert( false ); break;
             }
 
-            //[fpuma] This is messing with the unit tests. Replace with a log. Returning nullptr should be valid
-            //assert( nullptr != framePartPtr );
-
             if ( nullptr != _outFramePartType )
             {
                 *_outFramePartType = framePartType;

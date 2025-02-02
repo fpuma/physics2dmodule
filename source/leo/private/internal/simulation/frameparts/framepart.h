@@ -42,6 +42,6 @@ namespace puma::leo
 
         UserCollisionData m_userData = nullptr;
 
-        FramePartID m_framePartId;
+        const FramePartID m_framePartId;
     };
 }
